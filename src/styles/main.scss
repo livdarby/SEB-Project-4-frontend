@@ -3,6 +3,52 @@
 // ? Reassign any bulma variables
 $family-sans-serif: "Roboto", sans-serif;
 
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.navigation {
+  background-color: #69c0f0;
+  color: white;
+  display: flex;
+  max-height: 70px;
+  height: calc(20vh);
+  align-items: center;
+  //   justify-content: space-around;
+}
+
+.navigation img {
+  max-height: 60px;
+  height: calc(20vh);
+}
+
+.nav-items {
+  color: white;
+  font-size: 20px;
+  margin: 40px;
+}
+
+.nav-items:hover {
+  color: #1a2b64;
+}
+
+.container {
+  height: calc(100vh - 60px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.predictions {
+  background-color: lightgrey;
+  border: 1px solid black;
+  width: 80%;
+  height: 80%;
+  padding: 20px;
+  text-align: center;
+}
+
 // ! example on how to customize, skip to section "Add your own Bulma styles":
 // https://bulma.io/documentation/customize/with-sass-cli/
 
