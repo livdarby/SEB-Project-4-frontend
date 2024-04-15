@@ -7,7 +7,7 @@ function MatchCard({ date, teams }: IMatch) {
       {teams?.map((team) => {
         return (
           <>
-            {teams[0] === team && <p>{date}</p>}
+            {teams[0] === team && <p key={team.name}>{date}</p>}
             <div className="field">
               <label className="label">{team.name}</label>
               <input type="text" className="input" placeholder="score" />
