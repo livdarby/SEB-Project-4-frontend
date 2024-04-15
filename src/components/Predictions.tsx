@@ -5,7 +5,7 @@ import { IMatch } from "../../interfaces/match";
 function Predictions() {
   const [matches, setMatches] = React.useState<IMatch | any>(null);
 
-  console.log(matches);
+  console.log("match data", matches);
 
   function getNextSunday(date: any) {
     let today = new Date(date.getTime());
