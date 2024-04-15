@@ -1,6 +1,7 @@
 import React from "react";
 import MatchCard from "./MatchCard";
-import { IMatch } from "../../interfaces/match";
+import { IMatch, IDatabaseMatch } from "../../interfaces/match";
+import axios from "axios";
 
 function Predictions() {
   const [matches, setMatches] = React.useState<IMatch | any>(null);
@@ -31,27 +32,29 @@ function Predictions() {
   let clubsToRender = [] as any;
   let clubsFetched = 0;
 
-  async function fetchMatches() {
-    for (const club of premierLeagueClubs) {
-      const resp = await fetch(`/api/new/matches/${club}`);
-      const data = await resp.json();
-      const filtered_data = data.filter((match: any) =>
-        checkDates(
-          new Date(match.date).toLocaleDateString(),
-          lastSunday,
-          nextSunday
-        )
-      );
-      clubsToRender = [...clubsToRender, ...filtered_data];
-      clubsFetched++;
-      if (clubsFetched === premierLeagueClubs.length) {
-        setMatches(clubsToRender);
-      }
-    }
-  }
+  // async function fetchMatches() {
+  //   for (const club of premierLeagueClubs) {
+  //     const resp = await fetch(`/api/new/matches/${club}`);
+  //     const data = await resp.json();
+  //     const filtered_data = data.filter((match: any) =>
+  //       checkDates(
+  //         new Date(match.date).toLocaleDateString(),
+  //         lastSunday,
+  //         nextSunday
+  //       )
+  //     );
+  //     clubsToRender = [...clubsToRender, ...filtered_data];
+  //     clubsFetched++;
+  //     if (clubsFetched === premierLeagueClubs.length) {
+  //       setMatches(clubsToRender);
+  //     }
+  //   }
+  // }
+
+  // Commenting this out to save api searches ^
 
   React.useEffect(() => {
-    fetchMatches();
+    getDabaseMatches();
   }, []);
 
   console.log("match data", matches);
@@ -80,14 +83,43 @@ function Predictions() {
     return matchDate > lastSunday && matchDate <= nextSunday;
   }
 
+  const [areMatchesPosted, setAreMatchesPosted] = React.useState(false);
+
+  if (matches && !areMatchesPosted) {
+    async function postMatches() {
+      const resp = await axios.post("/api/matches", matches);
+    }
+    postMatches();
+    setAreMatchesPosted(true);
+  }
+
+  const [databaseMatches, setDatabaseMatches] = React.useState<IDatabaseMatch | any>(
+    null
+  );
+  const [areDatabaseMatchesFetched, setAreDatabaseMatchesFetched] =
+    React.useState(false);
+
+  async function getDabaseMatches() {
+    const resp = await fetch("/api/matches");
+    const data = await resp.json();
+    console.log(data)
+    setDatabaseMatches(data)
+  }
+
+  if (/* areMatchesPosted  && */ !areDatabaseMatchesFetched) {
+    getDabaseMatches();
+    setAreDatabaseMatchesFetched(true);
+  }
+
+
   return (
     <section className="container">
       <div className="predictions">
         <div>PREDICTIONS</div>
         <div>
-          {!matches && <p>Loading...</p>}
-          {matches?.map((match: IMatch, i: any) => {
-            return <MatchCard key={i} {...match} />;
+          {!databaseMatches && <p>Loading...</p>}
+          {databaseMatches?.map((databaseMatch: IDatabaseMatch) => {
+            return <MatchCard key={databaseMatch.id} {...databaseMatch} />;
           })}
         </div>
       </div>
