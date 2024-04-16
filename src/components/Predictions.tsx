@@ -113,9 +113,9 @@ function Predictions() {
 
   return (
     <section className="flex justify-center">
-      <div>
+      <div className="w-full">
         <h1>PREDICTIONS</h1>
-        <div>
+        <div className="flex justify-center flex-wrap grid w-full">
           {!databaseMatches && <p>Loading...</p>}
           {databaseMatches
             ?.filter((match: any) => {

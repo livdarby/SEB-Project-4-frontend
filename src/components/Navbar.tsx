@@ -1,6 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ user, setUser }: any) {
+
+const navigate = useNavigate();
+
+function logout() {
+  localStorage.removeItem("token");
+  setUser(null);
+  navigate("/");
+}
+
   return (
     <>
       <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
@@ -41,12 +50,14 @@ function Navbar() {
             >
               Home
             </Link>
-            <Link
-              to="/predictions"
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-            >
-              Predictions
-            </Link>
+            {user && (
+              <Link
+                to="/predictions"
+                className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+              >
+                Predictions
+              </Link>
+            )}
             <Link
               to="/about"
               className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
@@ -55,12 +66,19 @@ function Navbar() {
             </Link>
           </div>
           <div>
-            <Link
+            {!user && <Link
               to="/signin"
               className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
             >
               Members Area
-            </Link>
+            </Link>}
+            {user && <Link
+              to="/signin"
+              onClick={logout}
+              className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+            >
+              Sign Out
+            </Link>}
           </div>
         </div>
       </nav>
