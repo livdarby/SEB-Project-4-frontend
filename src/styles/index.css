@@ -1,4 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
 
 // ? Reassign any bulma variables
 $family-sans-serif: "Roboto", sans-serif;
@@ -53,4 +57,4 @@ $family-sans-serif: "Roboto", sans-serif;
 // https://bulma.io/documentation/customize/with-sass-cli/
 
 // ? Import bulma
-@import "../../node_modules/bulma/bulma.sass";
+@import "../../node_modules/bulma/bulma.sass"; */

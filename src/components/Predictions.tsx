@@ -93,17 +93,17 @@ function Predictions() {
     setAreMatchesPosted(true);
   }
 
-  const [databaseMatches, setDatabaseMatches] = React.useState<IDatabaseMatch | any>(
-    null
-  );
+  const [databaseMatches, setDatabaseMatches] = React.useState<
+    IDatabaseMatch | any
+  >(null);
   const [areDatabaseMatchesFetched, setAreDatabaseMatchesFetched] =
     React.useState(false);
 
   async function getDabaseMatches() {
     const resp = await fetch("/api/matches");
     const data = await resp.json();
-    console.log(data)
-    setDatabaseMatches(data)
+    console.log(data);
+    setDatabaseMatches(data);
   }
 
   if (/* areMatchesPosted  && */ !areDatabaseMatchesFetched) {
@@ -111,16 +111,19 @@ function Predictions() {
     setAreDatabaseMatchesFetched(true);
   }
 
-
   return (
-    <section className="container">
-      <div className="predictions">
-        <div>PREDICTIONS</div>
+    <section className="flex justify-center">
+      <div>
+        <h1>PREDICTIONS</h1>
         <div>
           {!databaseMatches && <p>Loading...</p>}
-          {databaseMatches?.map((databaseMatch: IDatabaseMatch) => {
-            return <MatchCard key={databaseMatch.id} {...databaseMatch} />;
-          })}
+          {databaseMatches
+            ?.filter((match: any) => {
+              return !match.match_date.includes("Mar") && match.id !== 1;
+            })
+            .map((databaseMatch: IDatabaseMatch) => {
+              return <MatchCard key={databaseMatch.id} {...databaseMatch} />;
+            })}
         </div>
       </div>
     </section>
