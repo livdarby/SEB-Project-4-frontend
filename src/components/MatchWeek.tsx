@@ -1,9 +1,7 @@
 import React from "react";
-import CheckScoreTwo from "./CheckScoreTwo";
-import CheckScoreOne from "./CheckScoreOne";
 import MatchScores from "./MatchScores";
 
-function Week33({ user, selected }: any) {
+function MatchWeek({ user, selected }: any) {
   const [matches, setMatches] = React.useState<any>(null);
   const [predictions, setPredictions] = React.useState<any>(null);
   const week33Start = new Date("Sat, 13 Apr 2024");
@@ -71,4 +69,4 @@ function Week33({ user, selected }: any) {
   );
 }
 
-export default Week33;
+export default MatchWeek;

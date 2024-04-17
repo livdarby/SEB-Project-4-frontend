@@ -1,12 +1,11 @@
 import React from "react";
-import { SyntheticEvent } from "react";
-import Week33 from "./Week33";
+import MatchWeek from "./MatchWeek";
 
 function Results({ user }: any) {
   const [selected, setSelected] = React.useState<any>(32);
 
   function handleClick(e: any) {
-    e.preventDefault()
+    e.preventDefault();
     setSelected(Number(e.target.id));
   }
 
@@ -84,7 +83,9 @@ function Results({ user }: any) {
           </a>
         </li>
       </ul>
-      <section>{selected && <Week33 user = {user} selected={selected} />}</section>
+      <section>
+        {selected && <MatchWeek user={user} selected={selected} />}
+      </section>
     </>
   );
 }

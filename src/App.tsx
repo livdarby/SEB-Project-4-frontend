@@ -8,7 +8,7 @@ import "./styles/index.css";
 import axios from "axios";
 import SignUp from "./components/SignUp";
 import Results from "./components/Results";
-import Week33 from "./components/Week33";
+import Week33 from "./components/MatchWeek";
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -31,13 +31,13 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar user={user} setUser={setUser}/>
+        <Navbar user={user} setUser={setUser} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/predictions" element={<Predictions user={user} />} />
-          <Route path="/results" element={<Results user={user} /> }/>
+          <Route path="/results" element={<Results user={user} />} />
           <Route path="/signin" element={<SignIn fetchUser={fetchUser} />} />
-          <Route path="/signup" element ={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </Router>
     </>
