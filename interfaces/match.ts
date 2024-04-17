@@ -12,6 +12,7 @@ export interface IDatabaseMatch {
   team_one_score?: number;
   team_two_name: string;
   team_two_score?: number;
+  user?: any
 }
 
 interface ITeam {

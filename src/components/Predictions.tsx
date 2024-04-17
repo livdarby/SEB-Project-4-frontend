@@ -3,9 +3,18 @@ import MatchCard from "./MatchCard";
 import { IMatch, IDatabaseMatch } from "../../interfaces/match";
 import axios from "axios";
 
-function Predictions() {
+function Predictions({ user }: any) {
   const [matches, setMatches] = React.useState<IMatch | any>(null);
+  const [areMatchesPosted, setAreMatchesPosted] = React.useState(false);
+  const [databaseMatches, setDatabaseMatches] = React.useState<
+    IDatabaseMatch | any
+  >(null);
+  const [areDatabaseMatchesFetched, setAreDatabaseMatchesFetched] =
+    React.useState(false);
 
+  const todaysDate = new Date();
+  const nextSunday = getNextSunday(todaysDate);
+  const lastSunday = getLastSunday(todaysDate);
   const premierLeagueClubs = [
     "Arsenal",
     "Aston Villa",
@@ -28,9 +37,10 @@ function Predictions() {
     "West Ham United",
     "Wolverhampton Wanderers",
   ];
-
   let clubsToRender = [] as any;
   let clubsFetched = 0;
+
+  console.log("match data", matches);
 
   // async function fetchMatches() {
   //   for (const club of premierLeagueClubs) {
@@ -57,7 +67,12 @@ function Predictions() {
     getDabaseMatches();
   }, []);
 
-  console.log("match data", matches);
+  async function getDabaseMatches() {
+    const resp = await fetch("/api/matches");
+    const data = await resp.json();
+    console.log(data);
+    setDatabaseMatches(data);
+  }
 
   function getNextSunday(date: any) {
     let today = new Date(date.getTime());
@@ -75,15 +90,9 @@ function Predictions() {
     return today.toLocaleDateString();
   }
 
-  const todaysDate = new Date();
-  const nextSunday = getNextSunday(todaysDate);
-  const lastSunday = getLastSunday(todaysDate);
-
   function checkDates(matchDate: any, lastSunday: any, nextSunday: any) {
     return matchDate > lastSunday && matchDate <= nextSunday;
   }
-
-  const [areMatchesPosted, setAreMatchesPosted] = React.useState(false);
 
   if (matches && !areMatchesPosted) {
     async function postMatches() {
@@ -93,36 +102,29 @@ function Predictions() {
     setAreMatchesPosted(true);
   }
 
-  const [databaseMatches, setDatabaseMatches] = React.useState<
-    IDatabaseMatch | any
-  >(null);
-  const [areDatabaseMatchesFetched, setAreDatabaseMatchesFetched] =
-    React.useState(false);
-
-  async function getDabaseMatches() {
-    const resp = await fetch("/api/matches");
-    const data = await resp.json();
-    console.log(data);
-    setDatabaseMatches(data);
-  }
-
   if (/* areMatchesPosted  && */ !areDatabaseMatchesFetched) {
     getDabaseMatches();
     setAreDatabaseMatchesFetched(true);
   }
 
   return (
-    <section className="flex justify-center">
-      <div className="w-full">
-        <h1>PREDICTIONS</h1>
-        <div className="flex justify-center flex-wrap grid w-full">
+    <section className="flex justify-center text-center">
+      <div className="w-full mx-auto">
+        <h1 className="text-2xl tracking-wide my-10">PREDICTIONS</h1>
+        <div className="flex justify-center flex-wrap grid-cols-2 w-full">
           {!databaseMatches && <p>Loading...</p>}
           {databaseMatches
             ?.filter((match: any) => {
               return !match.match_date.includes("Mar") && match.id !== 1;
             })
             .map((databaseMatch: IDatabaseMatch) => {
-              return <MatchCard key={databaseMatch.id} {...databaseMatch} />;
+              return (
+                <MatchCard
+                  key={databaseMatch.id}
+                  {...databaseMatch}
+                  user={user}
+                />
+              );
             })}
         </div>
       </div>
