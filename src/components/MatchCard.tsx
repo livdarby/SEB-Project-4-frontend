@@ -85,6 +85,8 @@ function MatchCard({
     navigate("/predictions");
     await getPredictionsByUser(id);
     setPredictionSubmitted(true);
+    setScoreOneInputted(true);
+    setScoreTwoInputted(true);
   }
 
   function handleChange(e: any) {
@@ -106,22 +108,22 @@ function MatchCard({
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-lg flex justify-center flex-wrap"
-      >
-        <p className="text-xs">
-          {match_date.substring(0, match_date.indexOf("2024") + "2024".length)}
-        </p>
-        <div className="flex w-full -mx-3 mb-6 text-center">
+      <form onSubmit={handleSubmit} className="w-full max-w-lg">
+        <div className="flex flex-col items-center w-full -mx-3 mb-6 text-center">
+          <p className="text-xs">
+            {match_date.substring(
+              0,
+              match_date.indexOf("2024") + "2024".length
+            )}
+          </p>
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label className="flex justify-center items-center min-h-10 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               {team_one_name}
             </label>
             <input
               className={
-                "text-center disabled:opacity-50 appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-2 leading-tight border-red-500 focus:outline-none focus:bg-white " +
-                (ScoreOneInputted
+                "text-center disabled:opacity-50 appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-2 leading-tight focus:outline-none focus:bg-white " +
+                (ScoreOneInputted || predictionSubmitted
                   ? "focus:border-gray-500 border-gray-500"
                   : "border-red-500")
               }
@@ -137,7 +139,7 @@ function MatchCard({
               onChange={handleChange}
               disabled={predictionSubmitted || (today >= match && true)}
             />
-            {!ScoreOneInputted && (
+            {!ScoreOneInputted && !predictionSubmitted && (
               <p className="text-red-500 text-xs italic">
                 Please fill out this field.
               </p>
@@ -149,8 +151,8 @@ function MatchCard({
             </label>
             <input
               className={
-                "text-center disabled:opacity-50 appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-2 leading-tight border-red-500 focus:outline-none focus:bg-white " +
-                (ScoreTwoInputted
+                "text-center disabled:opacity-50 appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-2 leading-tight focus:outline-none focus:bg-white " +
+                (ScoreTwoInputted || predictionSubmitted
                   ? "focus:border-gray-500 border-gray-500"
                   : "border-red-500")
               }
@@ -167,7 +169,7 @@ function MatchCard({
               disabled={predictionSubmitted || (today >= match && true)}
             />
 
-            {!ScoreTwoInputted && (
+            {!ScoreTwoInputted && !predictionSubmitted && (
               <p className="text-red-500 text-xs italic">
                 Please fill out this field.
               </p>

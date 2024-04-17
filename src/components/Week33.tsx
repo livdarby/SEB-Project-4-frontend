@@ -45,27 +45,31 @@ function Week33({ user }: any) {
                   src="/img/card-top.jpg"
                   alt="Sunset in the mountains"
                 /> */}
-                <h2 className="text-center">
+                <p className="text-center text-xs">
                   {match.match_date.substring(
                     0,
                     match.match_date.indexOf("2024") + "2024".length
                   )}
-                </h2>
-                <p className="text-center">RESULT:</p>
+                </p>
+                <p className="text-center min-h-10 block uppercase tracking-wide text-gray-700 text-s font-bold mt-2">
+                  RESULT:
+                </p>
                 <div className="flex justify-evenly mt-2">
-                  <div className="inline font-bold text-l mb-2 text-center min-w-40">
+                  <div className="inline font-bold text-l mb-2 text-center min-w-40 min-h-10 block uppercase tracking-wide text-gray-700 text-xs font-bold">
                     {match.team_one_name} <br />
                     {match.team_one_score}
                   </div>
-                  <div className="inline font-bold text-l mb-2 text-center min-w-40">
+                  <div className="inline font-bold text-l mb-2 text-center min-w-40 min-h-10 block uppercase tracking-wide text-gray-700 text-xs font-bold">
                     {match.team_two_name}
                     <br />
                     {match.team_two_score}
                   </div>
                 </div>
-                <p className="text-center">PREDICTION:</p>
+                <p className="text-center min-h-10 block uppercase tracking-wide text-gray-700 text-s font-bold mt-2">
+                  PREDICTION:
+                </p>
                 <div className="flex justify-evenly mt-2">
-                  <div className="inline font-bold text-l mb-2 text-center min-w-40">
+                  <div className="inline font-bold text-l mb-2 text-center min-w-40 min-h-10 block uppercase tracking-wide text-gray-700 text-xs font-bold">
                     {match.team_one_name} <br />
                     {predictions &&
                       predictions
@@ -89,7 +93,7 @@ function Week33({ user }: any) {
                           );
                         })}
                   </div>
-                  <div className="inline font-bold text-l mb-2 text-center min-w-40">
+                  <div className="inline font-bold text-l mb-2 text-center min-w-40 min-h-10 block uppercase tracking-wide text-gray-700 text-xs font-bold">
                     {match.team_two_name}
                     <br />
                     {predictions &&
