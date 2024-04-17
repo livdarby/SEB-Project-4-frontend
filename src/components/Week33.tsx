@@ -11,7 +11,7 @@ function Week33({ user, selected }: any) {
   const token = localStorage.getItem("token");
   const week32Start = new Date("Fri, 5 Apr 2024");
   const week32End = new Date("Mon, 8 Apr 2024");
-  console.log(matches);
+  console.log(predictions);
 
   React.useEffect(() => {
     getLastWeekMatches();

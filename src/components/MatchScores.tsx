@@ -1,7 +1,7 @@
 import React from "react";
+import PredictionScores from "./PredictionScores";
 
 function MatchScores({ match, predictions, selected, user }: any) {
-
   return (
     <div className="max-w-lg rounded overflow-hidden shadow-lg mx-auto my-5">
       <p className="text-center text-xs">
@@ -27,17 +27,17 @@ function MatchScores({ match, predictions, selected, user }: any) {
       <p className="text-center min-h-10 block uppercase tracking-wide text-gray-700 text-s font-bold mt-2">
         PREDICTION:
       </p>
-      <div className="flex justify-evenly mt-2">
+      <div className="flex justify-evenly mt-2 ">
         <div className="inline font-bold text-l mb-2 text-center min-w-40 min-h-10 block uppercase tracking-wide text-gray-700 text-xs font-bold">
-          {match.team_one_name} <br />
+          {/* {match.team_one_name} <br /> */}
           {predictions &&
             predictions
               .filter((prediction: any) => {
                 return prediction.match.id === match.id;
               })
               .map((prediction: any) => {
-                return (
-                  <p>{prediction.team_one_score}</p>
+                return ( <PredictionScores prediction={prediction} match={match} selected={match.id} />
+                //   <p>{prediction.team_one_score}</p>
                   // <CheckScoreOne
                   //   user={user}
                   //   predictions={predictions}
@@ -51,7 +51,7 @@ function MatchScores({ match, predictions, selected, user }: any) {
                 );
               })}
         </div>
-        <div className="inline font-bold text-l mb-2 text-center min-w-40 min-h-10 block uppercase tracking-wide text-gray-700 text-xs font-bold">
+        {/* <div className="inline font-bold text-l mb-2 text-center min-w-40 min-h-10 block uppercase tracking-wide text-gray-700 text-xs font-bold">
           {match.team_two_name}
           <br />
           {predictions &&
@@ -72,7 +72,7 @@ function MatchScores({ match, predictions, selected, user }: any) {
                   // />
                 );
               })}
-        </div>
+        </div> */}
       </div>
     </div>
   );
