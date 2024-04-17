@@ -6,6 +6,8 @@ function CheckScoreTwo({
   team_two_score_prediction,
   team_one_score,
   team_one_score_prediction,
+  selected,
+  team_one_name,
 }: any) {
   const [backgroundColour, setBackgroundColour] = React.useState("");
 
@@ -16,9 +18,18 @@ function CheckScoreTwo({
     ) {
       setBackgroundColour("bg-green-500");
     } else if (
-      (team_one_score_prediction - team_two_score_prediction) *
-        (team_one_score - team_two_score) >
-      0
+      team_one_score === team_two_score &&
+      team_one_score_prediction === team_two_score_prediction
+    ) {
+      setBackgroundColour("bg-amber-300");
+    } else if (
+      team_one_score > team_two_score &&
+      team_one_score_prediction > team_two_score_prediction
+    ) {
+      setBackgroundColour("bg-amber-300");
+    } else if (
+      team_one_score < team_two_score &&
+      team_one_score_prediction < team_two_score_prediction
     ) {
       setBackgroundColour("bg-amber-300");
     } else {
@@ -26,9 +37,10 @@ function CheckScoreTwo({
     }
   }
 
+
   React.useEffect(() => {
     checkScore();
-  }, []);
+  }, [selected]);
 
   return (
     <div className={backgroundColour + " max-w-40"}>

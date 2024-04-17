@@ -8,6 +8,7 @@ function CheckScoreOne({
   team_one_score,
   team_one_score_prediction,
   user,
+  selected,
 }: any) {
   const [backgroundColour, setBackgroundColour] = React.useState("");
   const [userScore, setUserScore] = React.useState<any>(0);
@@ -20,18 +21,21 @@ function CheckScoreOne({
       team_two_score_prediction === team_two_score
     ) {
       setBackgroundColour("bg-green-500");
-      updatedScore += 3;
     } else if (
-      (team_one_score_prediction - team_two_score_prediction) *
-        (team_one_score - team_two_score) >
-      0
+      (team_one_score === team_two_score) &&
+      (team_one_score_prediction === team_two_score_prediction)
     ) {
       setBackgroundColour("bg-amber-300");
-      updatedScore += 1;
+    } else if (
+      ((team_one_score > team_two_score) &&
+        (team_one_score_prediction > team_two_score_prediction)) ||
+      ((team_one_score < team_two_score) &&
+        (team_one_score_prediction < team_two_score_prediction))
+    ) {
+      setBackgroundColour("bg-amber-300");
     } else {
       setBackgroundColour("bg-rose-300");
     }
-    // setUserScore(updatedScore);
   }
 
   async function updateScore() {
@@ -51,7 +55,7 @@ function CheckScoreOne({
   React.useEffect(() => {
     checkScore();
     // updateScore();
-  }, []);
+  }, [selected]);
 
   React.useEffect(() => {
     setUserScore(updatedScore);

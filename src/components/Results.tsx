@@ -3,16 +3,17 @@ import { SyntheticEvent } from "react";
 import Week33 from "./Week33";
 
 function Results({ user }: any) {
-  const [selected, setSelected] = React.useState(33);
+  const [selected, setSelected] = React.useState<any>(32);
 
   function handleClick(e: any) {
+    e.preventDefault()
     setSelected(Number(e.target.id));
   }
 
   return (
     <>
-      <ul className="flex border-b">
-        <li className="-mb-px mr-1">
+      <ul className="flex border-b justify-center">
+        {/* <li className="-mb-px mr-1">
           <a
             onClick={handleClick}
             id="30"
@@ -25,8 +26,8 @@ function Results({ user }: any) {
           >
             Week 30
           </a>
-        </li>
-        <li className="-mb-px mr-1">
+        </li> */}
+        {/* <li className="-mb-px mr-1">
           <a
             onClick={handleClick}
             id="31"
@@ -39,7 +40,7 @@ function Results({ user }: any) {
           >
             Week 31
           </a>
-        </li>
+        </li> */}
         <li className="-mb-px mr-1 ">
           <a
             onClick={handleClick}
@@ -68,8 +69,22 @@ function Results({ user }: any) {
             Week 33
           </a>
         </li>
+        <li className="-mb-px mr-1">
+          <a
+            onClick={handleClick}
+            id="34"
+            className={
+              "bg-white inline-block py-2 px-4 font-semibold " +
+              (selected === 34
+                ? "border-l border-t border-r rounded-t text-teal-700"
+                : "text-teal-500 hover:text-teal-800")
+            }
+          >
+            Week 34
+          </a>
+        </li>
       </ul>
-      <section className="">{selected === 33 && <Week33 user = {user} />}</section>
+      <section>{selected && <Week33 user = {user} selected={selected} />}</section>
     </>
   );
 }
