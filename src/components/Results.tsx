@@ -1,9 +1,9 @@
 import React from "react";
 import { SyntheticEvent } from "react";
-import Week32 from "./Week32";
+import Week33 from "./Week33";
 
 function Results({ user }: any) {
-  const [selected, setSelected] = React.useState(32);
+  const [selected, setSelected] = React.useState(33);
 
   function handleClick(e: any) {
     setSelected(Number(e.target.id));
@@ -69,7 +69,7 @@ function Results({ user }: any) {
           </a>
         </li>
       </ul>
-      <section>{selected === 32 && <Week32 />}</section>
+      <section className="">{selected === 33 && <Week33 user = {user} />}</section>
     </>
   );
 }

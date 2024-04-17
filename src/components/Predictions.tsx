@@ -42,36 +42,42 @@ function Predictions({ user }: any) {
 
   console.log("match data", matches);
 
-  // async function fetchMatches() {
-  //   for (const club of premierLeagueClubs) {
-  //     const resp = await fetch(`/api/new/matches/${club}`);
-  //     const data = await resp.json();
-  //     const filtered_data = data.filter((match: any) =>
-  //       checkDates(
-  //         new Date(match.date).toLocaleDateString(),
-  //         lastSunday,
-  //         nextSunday
-  //       )
-  //     );
-  //     clubsToRender = [...clubsToRender, ...filtered_data];
-  //     clubsFetched++;
-  //     if (clubsFetched === premierLeagueClubs.length) {
-  //       setMatches(clubsToRender);
-  //     }
-  //   }
-  // }
+  async function fetchMatches() {
+    for (const club of premierLeagueClubs) {
+      const resp = await fetch(`/api/new/matches/${club}`);
+      const data = await resp.json();
+      const filtered_data = data.filter((match: any) =>
+        checkDates(
+          new Date(match.date).toLocaleDateString(),
+          lastSunday,
+          nextSunday
+        )
+      );
+      clubsToRender = [...clubsToRender, ...filtered_data];
+      clubsFetched++;
+      if (clubsFetched === premierLeagueClubs.length) {
+        setMatches(clubsToRender);
+      }
+    }
+  }
 
   // Commenting this out to save api searches ^
 
-  React.useEffect(() => {
-    getDabaseMatches();
-  }, []);
+  // React.useEffect(() => {
+  //   fetchMatches()
+  // }, []);
 
   async function getDabaseMatches() {
     const resp = await fetch("/api/matches");
     const data = await resp.json();
     console.log(data);
-    setDatabaseMatches(data);
+    const filtered_db_data = data.filter((match: any) => {
+      return (
+        new Date(match.match_date) > new Date("Tue, 16 Apr 2024") &&
+        new Date(match.match_date) < new Date("Mon, 22 Apr 2024")
+      );
+    });
+    setDatabaseMatches(filtered_db_data);
   }
 
   function getNextSunday(date: any) {
@@ -102,7 +108,7 @@ function Predictions({ user }: any) {
     setAreMatchesPosted(true);
   }
 
-  if (/* areMatchesPosted  && */ !areDatabaseMatchesFetched) {
+  if (/*areMatchesPosted  &&*/ !areDatabaseMatchesFetched) {
     getDabaseMatches();
     setAreDatabaseMatchesFetched(true);
   }

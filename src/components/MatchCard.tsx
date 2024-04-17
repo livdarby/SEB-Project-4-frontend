@@ -16,8 +16,8 @@ function MatchCard({
 }: IDatabaseMatch) {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const today = new Date
-  const match = new Date(match_date)
+  const today = new Date();
+  const match = new Date(match_date);
 
   const [matchModel, setMatchModel] = React.useState(null);
   const [predictionSubmitted, setPredictionSubmitted] = React.useState(false);
@@ -32,7 +32,7 @@ function MatchCard({
     match: null,
   });
 
-  console.log(matchModel, predictionSubmitted, predictions);
+  // console.log(matchModel, predictionSubmitted, predictions);
 
   React.useEffect(() => {
     async function getMatchById() {
@@ -115,7 +115,7 @@ function MatchCard({
         </p>
         <div className="flex w-full -mx-3 mb-6 text-center">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            <label className="flex justify-center items-center min-h-10 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               {team_one_name}
             </label>
             <input
@@ -135,7 +135,7 @@ function MatchCard({
                   : formData.team_one_score
               }
               onChange={handleChange}
-              disabled={predictionSubmitted || today >= match && true}
+              disabled={predictionSubmitted || (today >= match && true)}
             />
             {!ScoreOneInputted && (
               <p className="text-red-500 text-xs italic">
@@ -144,7 +144,7 @@ function MatchCard({
             )}
           </div>
           <div className="w-full md:w-1/2 px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            <label className="flex justify-center items-center min-h-10 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               {team_two_name}
             </label>
             <input
@@ -164,7 +164,7 @@ function MatchCard({
                   : formData.team_two_score
               }
               onChange={handleChange}
-              disabled={predictionSubmitted || today >= match && true}
+              disabled={predictionSubmitted || (today >= match && true)}
             />
 
             {!ScoreTwoInputted && (
