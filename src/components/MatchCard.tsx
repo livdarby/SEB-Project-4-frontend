@@ -118,9 +118,9 @@ function MatchCard({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full max-w-lg">
-        <div className="flex flex-col items-center w-full -mx-3 mb-6 text-center">
-          <p className="text-xs">
+      <form onSubmit={handleSubmit} className="w-full max-w-lg mx-5 flex items-center">
+        <div className="bg-white border-solid border-2 border-amber-500 flex flex-col items-center w-full -mx-3 mb-6 text-center hover:bg-orange-200">
+          <p className="my-4 text-xs">
             {match_date.substring(
               0,
               match_date.indexOf("2024") + "2024".length
@@ -132,10 +132,10 @@ function MatchCard({
             </label>
             <input
               className={
-                "text-center disabled:opacity-50 appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-2 leading-tight focus:outline-none focus:bg-white " +
+                "text-center disabled:opacity-50 appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 mb-2 leading-tight focus:outline-none focus:bg-white " +
                 (ScoreOneInputted || predictionSubmitted
-                  ? "focus:border-gray-500 border-gray-500"
-                  : "border-red-500")
+                  ? "focus:border-gray-500 border-gray-500 bg-gray-300"
+                  : "border-amber-600")
               }
               id="grid-first-name"
               type="text"
@@ -150,7 +150,7 @@ function MatchCard({
               disabled={predictionSubmitted || (today >= match && true)}
             />
             {!ScoreOneInputted && !predictionSubmitted && (
-              <p className="text-red-500 text-xs italic">
+              <p className="text-amber-600 text-xs italic">
                 Please fill out this field.
               </p>
             )}
@@ -161,10 +161,10 @@ function MatchCard({
             </label>
             <input
               className={
-                "text-center disabled:opacity-50 appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-2 leading-tight focus:outline-none focus:bg-white " +
+                "text-center disabled:opacity-50 appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 mb-2 leading-tight focus:outline-none focus:bg-white " +
                 (ScoreTwoInputted || predictionSubmitted
-                  ? "focus:border-gray-500 border-gray-500"
-                  : "border-red-500")
+                  ? "focus:border-gray-500 border-gray-500 bg-gray-300"
+                  : "border-amber-600")
               }
               id="grid-last-name"
               type="text"
@@ -180,14 +180,14 @@ function MatchCard({
             />
 
             {!ScoreTwoInputted && !predictionSubmitted && (
-              <p className="text-red-500 text-xs italic">
+              <p className="text-amber-600 text-xs italic">
                 Please fill out this field.
               </p>
             )}
           </div>
-          <div className="w-full md:w-1/2 px-3 flex justify-center items-center">
+          <div className="my-4 w-full md:w-1/2 px-3 flex justify-around">
             <button
-              className="h-15 flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded disabled:opacity-40"
+              className="min-w-20 h-15 flex-shrink-0 bg-[#1884ef] hover:bg-white hover:text-[#1884ef] border-[#1884ef] hover:border-[#1884ef] text-sm border-2 text-white py-1 px-2 rounded disabled:opacity-40"
               type="button"
               onClick={handleSubmit}
               disabled={predictionSubmitted && true}
@@ -195,7 +195,7 @@ function MatchCard({
               Submit
             </button>
             <button
-              className="h-15 flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded disabled:opacity-40"
+              className="min-w-20 h-15 flex-shrink-0 bg-[#1884ef] hover:bg-white hover:text-[#1884ef] border-[#1884ef] hover:border-[#1884ef] text-sm border-2 text-white py-1 px-2 rounded disabled:opacity-40"
               type="button"
               onClick={handleEdit}
               // disabled={predictionSubmitted && true}

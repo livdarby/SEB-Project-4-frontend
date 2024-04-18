@@ -1,3 +1,7 @@
+sky-blue {
+  color: aqua
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

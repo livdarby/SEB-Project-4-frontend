@@ -114,9 +114,11 @@ function Predictions({ user }: any) {
   }
 
   return (
-    <section className="flex justify-center text-center">
+    <section className="flex justify-center text-center bg-[#d3ecfb]">
       <div className="w-full mx-auto">
-        <h1 className="text-2xl tracking-wide my-10">PREDICTIONS</h1>
+        <h1 className="text-3xl tracking-wide my-10 font-title tracking-widest text-[#1884ef]">
+          PREDICTIONS
+        </h1>
         <div className="flex justify-center flex-wrap grid-cols-2 w-full">
           {!databaseMatches && <p>Loading...</p>}
           {databaseMatches

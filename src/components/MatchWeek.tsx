@@ -45,7 +45,10 @@ function MatchWeek({ user, selected }: any) {
   }
 
   return (
-    <form>
+    <form className="bg-[#d3ecfb]">
+      <h1 className="text-center text-3xl tracking-wide py-10 font-title tracking-widest text-[#1884ef]">
+        RESULTS
+      </h1>
       {!matches && selected !== 34 && (
         <p className="text-center">Loading results...</p>
       )}
