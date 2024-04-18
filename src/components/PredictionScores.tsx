@@ -1,27 +1,35 @@
 import React from "react";
-import MemberPoints from "./MemberPoints";
 
-function PredictionScores({ prediction, match, selected, user, sendDataToParent }: any) {
-  const [dataFromMemberPoints, setDataFromMemberPoints] = React.useState(null);
+function PredictionScores({
+  prediction,
+  match,
+  selected,
+  user,
+}: any) {
   const [backgroundColour, setBackgroundColour] = React.useState("");
+  const [points, setPoints] = React.useState(null);
+  const token = localStorage.getItem("token");
 
-  const handleDataFromMemberPoints = (data: any) => {
-    setDataFromMemberPoints(data);
-  };
+
+  async function checkPoints() {
+    const resp = await fetch(`/api/predictionresult/${prediction.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await resp.json();
+    setPoints(data.points)
+  }
+
+  React.useEffect(() => {
+    checkPoints();
+  }, []);
 
   function checkScores() {
     if (
-      prediction.team_one_score === match.team_one_score &&
-      prediction.team_two_score === match.team_two_score
+      points === 3
     ) {
       setBackgroundColour("bg-green-400");
     } else if (
-      (prediction.team_one_score > prediction.team_two_score &&
-        match.team_one_score > match.team_two_score) ||
-      (prediction.team_one_score < prediction.team_two_score &&
-        match.team_one_score < match.team_two_score) ||
-      (prediction.team_one_score === prediction.team_two_score &&
-        match.team_one_score === match.team_two_score)
+      points === 1
     ) {
       setBackgroundColour("bg-amber-300");
     } else {
@@ -31,8 +39,7 @@ function PredictionScores({ prediction, match, selected, user, sendDataToParent 
 
   React.useEffect(() => {
     checkScores();
-  }, [selected]);
-
+  }, [points]);
 
   return (
     <>
@@ -49,14 +56,8 @@ function PredictionScores({ prediction, match, selected, user, sendDataToParent 
           <p>{prediction.team_two_name}</p>
           <p>{prediction.team_two_score}</p>
         </div>
-        <MemberPoints
-          backgroundColour={backgroundColour}
-          user={user}
-          match={match}
-          sendDataToParent={handleDataFromMemberPoints}
-        />
       </div>
-      <div>Points : {dataFromMemberPoints}</div>
+      <div>Points : {points}</div>
     </>
   );
 }
