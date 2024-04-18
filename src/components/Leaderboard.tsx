@@ -3,6 +3,8 @@ import React from "react";
 function Leaderboard({ user }: any) {
   const token = localStorage.getItem("token");
   const [users, setUsers] = React.useState<any>(null);
+  const [sortedUsers, setSortedUsers] = React.useState<any>(null);
+  console.log(sortedUsers);
 
   async function getUsers() {
     const resp = await fetch("/api/users", {
@@ -10,6 +12,13 @@ function Leaderboard({ user }: any) {
     });
     const data = await resp.json();
     setUsers(data);
+  }
+
+  if (users && !sortedUsers) {
+    const sortedArray = users.sort(
+      (a: any, b: any) => b.total_score - a.total_score
+    );
+    setSortedUsers(sortedArray);
   }
 
   React.useEffect(() => {
@@ -37,8 +46,8 @@ function Leaderboard({ user }: any) {
             </tr>
           </thead>
           <tbody>
-            {users &&
-              users.map((user: any) => {
+            {sortedUsers &&
+              sortedUsers.map((user: any) => {
                 return (
                   <>
                     <tr>
@@ -49,7 +58,7 @@ function Leaderboard({ user }: any) {
                         {user.total_score}
                       </td>
                       <td className="bg-white uppercase tracking-wide text-gray-700 text-s font-bold text-center border-2 border-gray-300">
-                        {(user.total_score / 60) * 100}%
+                        {Math.round((user.total_score / 60) * 100)}%
                       </td>
                     </tr>
                   </>
