@@ -31,8 +31,7 @@ function MatchCard({
     team_two_score: "",
     match: null,
   });
-
-  // console.log(matchModel, predictionSubmitted, predictions);
+  const [selectedEdit, setSelectedEdit] = React.useState(false);
 
   React.useEffect(() => {
     async function getMatchById() {
@@ -76,17 +75,23 @@ function MatchCard({
   }
 
   async function handleSubmit(e: SyntheticEvent) {
-    e.preventDefault();
     const token = localStorage.getItem("token");
-    await axios.post("/api/predictions", formData, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    // console.log(resp.data);
+    e.preventDefault();
+    if (selectedEdit) {
+      await axios.put(`/api/predictions/${predictions[0].id}`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } else {
+      await axios.post("/api/predictions", formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    }
     navigate("/predictions");
     await getPredictionsByUser(id);
     setPredictionSubmitted(true);
     setScoreOneInputted(true);
     setScoreTwoInputted(true);
+    setSelectedEdit(false);
   }
 
   function handleChange(e: any) {
@@ -104,6 +109,11 @@ function MatchCard({
     } else {
       setScoreTwoInputted(false);
     }
+  }
+
+  function handleEdit(e: any) {
+    setPredictionSubmitted(false);
+    setSelectedEdit(true);
   }
 
   return (
@@ -183,6 +193,14 @@ function MatchCard({
               disabled={predictionSubmitted && true}
             >
               Submit
+            </button>
+            <button
+              className="h-15 flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded disabled:opacity-40"
+              type="button"
+              onClick={handleEdit}
+              // disabled={predictionSubmitted && true}
+            >
+              Edit
             </button>
           </div>
         </div>
