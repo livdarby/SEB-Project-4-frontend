@@ -16,7 +16,7 @@ function PredictionScores({ prediction, match, selected, user }: any) {
 
   React.useEffect(() => {
     checkPoints();
-  }, []);
+  }, [match]);
 
   function checkScores() {
     if (points === 3) {

@@ -9,10 +9,12 @@ function Results({ user }: any) {
   const [userScoreUpdated, setUserScoreUpdated] = React.useState(false)
   const currentUser = user;
   const token = localStorage.getItem("token");
+  const [dataRendered, setDataRendered] = React.useState(false)
 
   function handleClick(e: any) {
     e.preventDefault();
     setSelected(Number(e.target.id));
+    setDataRendered(false)
   }
 
   async function getUserPoints() {
@@ -90,7 +92,7 @@ function Results({ user }: any) {
         </li>
       </ul>
       <section className="bg-[#d3ecfb]">
-        {selected && <MatchWeek user={currentUser} selected={selected} userPoints={userPoints} />}
+        {selected && <MatchWeek dataRendered={dataRendered} setDataRendered={setDataRendered} user={currentUser} selected={selected} userPoints={userPoints} />}
       </section>
     </>
   );

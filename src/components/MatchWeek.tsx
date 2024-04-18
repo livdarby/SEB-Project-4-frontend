@@ -2,7 +2,7 @@ import React from "react";
 import MatchScores from "./MatchScores";
 import axios from "axios";
 
-function MatchWeek({ user, selected, userPoints }: any) {
+function MatchWeek({ user, selected, userPoints, dataRendered, setDataRendered }: any) {
   const [matches, setMatches] = React.useState<any>(null);
   const [predictions, setPredictions] = React.useState<any>(null);
   const week33Start = new Date("Sat, 13 Apr 2024");
@@ -12,11 +12,16 @@ function MatchWeek({ user, selected, userPoints }: any) {
   const week32End = new Date("Mon, 8 Apr 2024");
   // console.log(predictions);
   const currentUser = user;
+  const [areMatchesRendered, setAreMatchesRendered] = React.useState(false);
+  console.log(selected);
+  console.log(matches)
+  console.log(predictions)
 
   React.useEffect(() => {
-    getLastWeekMatches();
-    findPredictionByUser();
-  }, [selected]);
+    getLastWeekMatches()
+    findPredictionByUser()
+    setDataRendered(true)
+  }, [!dataRendered])
 
   async function getLastWeekMatches() {
     const resp = await fetch("/api/matches");
@@ -43,6 +48,7 @@ function MatchWeek({ user, selected, userPoints }: any) {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await resp.json();
+    console.log(data)
     setPredictions(data);
   }
 
