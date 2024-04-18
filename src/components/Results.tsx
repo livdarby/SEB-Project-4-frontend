@@ -3,43 +3,30 @@ import MatchWeek from "./MatchWeek";
 
 function Results({ user }: any) {
   const [selected, setSelected] = React.useState<any>(32);
+  const [userPoints, setUserPoints] = React.useState<any>(null);
+  const currentUser = user;
+  const token = localStorage.getItem("token");
 
   function handleClick(e: any) {
     e.preventDefault();
     setSelected(Number(e.target.id));
   }
 
+  async function getUserPoints() {
+    const resp = await fetch(`/api/checkpredictions/${user.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await resp.json();
+    setUserPoints(data.message)
+  }
+
+  React.useEffect(() => {
+    getUserPoints();
+  }, []);
+
   return (
     <>
       <ul className="flex border-b justify-center bg-[#d3ecfb] border-1 border-white">
-        {/* <li className="-mb-px mr-1">
-          <a
-            onClick={handleClick}
-            id="30"
-            className={
-              "bg-white inline-block py-2 px-4 font-semibold " +
-              (selected === 30
-                ? "border-l border-t border-r rounded-t text-teal-700"
-                : "text-teal-500 hover:text-teal-800")
-            }
-          >
-            Week 30
-          </a>
-        </li> */}
-        {/* <li className="-mb-px mr-1">
-          <a
-            onClick={handleClick}
-            id="31"
-            className={
-              "bg-white inline-block py-2 px-4 font-semibold " +
-              (selected === 31
-                ? "border-l border-t border-r rounded-t text-teal-700"
-                : "text-teal-500 hover:text-teal-800")
-            }
-          >
-            Week 31
-          </a>
-        </li> */}
         <li className="-mb-px mr-1  ">
           <a
             onClick={handleClick}
@@ -84,7 +71,7 @@ function Results({ user }: any) {
         </li>
       </ul>
       <section className="bg-[#d3ecfb]">
-        {selected && <MatchWeek user={user} selected={selected} />}
+        {selected && <MatchWeek user={currentUser} selected={selected} userPoints={userPoints} />}
       </section>
     </>
   );

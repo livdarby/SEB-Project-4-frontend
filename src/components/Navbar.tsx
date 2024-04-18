@@ -25,7 +25,7 @@ function Navbar({ user, setUser }: any) {
             height="54"
             viewBox="0 0 54 54"
           ></svg>
-          <span className="font-semibold text-xl tracking-wide">
+          <span className="font-marker font-semibold text-2xl tracking-widest">
             Premier Picks
           </span>
         </div>
@@ -63,6 +63,14 @@ function Navbar({ user, setUser }: any) {
                 className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
               >
                 Results
+              </Link>
+            )}
+            {user && (
+              <Link
+                to="/leaderboard"
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+              >
+                Leaderboard
               </Link>
             )}
             <Link

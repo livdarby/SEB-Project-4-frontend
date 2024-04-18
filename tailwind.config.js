@@ -4,8 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'title' : "DM Serif Display"
-      }
+        title: "DM Serif Display",
+        marker: "Permanent Marker",
+      },
     },
   },
   plugins: [],

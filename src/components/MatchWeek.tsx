@@ -1,7 +1,7 @@
 import React from "react";
 import MatchScores from "./MatchScores";
 
-function MatchWeek({ user, selected }: any) {
+function MatchWeek({ user, selected, userPoints }: any) {
   const [matches, setMatches] = React.useState<any>(null);
   const [predictions, setPredictions] = React.useState<any>(null);
   const week33Start = new Date("Sat, 13 Apr 2024");
@@ -9,7 +9,8 @@ function MatchWeek({ user, selected }: any) {
   const token = localStorage.getItem("token");
   const week32Start = new Date("Fri, 5 Apr 2024");
   const week32End = new Date("Mon, 8 Apr 2024");
-  console.log(predictions);
+  // console.log(predictions);
+  const currentUser = user;
 
   React.useEffect(() => {
     getLastWeekMatches();
@@ -46,9 +47,12 @@ function MatchWeek({ user, selected }: any) {
 
   return (
     <form className="bg-[#d3ecfb]">
-      <h1 className="text-center text-3xl tracking-wide py-10 font-title tracking-widest text-[#1884ef]">
+      <h1 className="text-center text-3xl tracking-wide py-10 font-marker tracking-widest text-[#1884ef]">
         RESULTS
       </h1>
+      <p className="uppercase tracking-wide text-gray-700 text-xs font-bold text-center">
+        Running total: {userPoints}
+      </p>
       {!matches && selected !== 34 && (
         <p className="text-center">Loading results...</p>
       )}
@@ -63,7 +67,7 @@ function MatchWeek({ user, selected }: any) {
                 match={match}
                 predictions={predictions}
                 selected={selected}
-                user={user}
+                user={currentUser}
               />
             </div>
           );

@@ -1,11 +1,14 @@
 import React from "react";
+import MemberPoints from "./MemberPoints";
 
-function PredictionScores({ prediction, match, selected }: any) {
-  console.log("Prediction: ", prediction);
-  console.log("Match: ", match);
-
+function PredictionScores({ prediction, match, selected, user, sendDataToParent }: any) {
+  const [dataFromMemberPoints, setDataFromMemberPoints] = React.useState(null);
   const [backgroundColour, setBackgroundColour] = React.useState("");
-  console.log(backgroundColour);
+
+  const handleDataFromMemberPoints = (data: any) => {
+    setDataFromMemberPoints(data);
+  };
+
   function checkScores() {
     if (
       prediction.team_one_score === match.team_one_score &&
@@ -30,21 +33,31 @@ function PredictionScores({ prediction, match, selected }: any) {
     checkScores();
   }, [selected]);
 
+
   return (
-    <div
-      className={
-        "flex justify-evenly border-4 border-white " + backgroundColour
-      }
-    >
-      <div className="min-w-40 min-h-10 flex flex-col justify-center">
-        <p>{prediction.team_one_name}</p>
-        <p>{prediction.team_one_score}</p>
+    <>
+      <div
+        className={
+          "flex justify-evenly border-4 border-white " + backgroundColour
+        }
+      >
+        <div className="min-w-40 min-h-10 flex flex-col justify-center">
+          <p>{prediction.team_one_name}</p>
+          <p>{prediction.team_one_score}</p>
+        </div>
+        <div className="min-w-40 min-h-10 flex flex-col justify-center">
+          <p>{prediction.team_two_name}</p>
+          <p>{prediction.team_two_score}</p>
+        </div>
+        <MemberPoints
+          backgroundColour={backgroundColour}
+          user={user}
+          match={match}
+          sendDataToParent={handleDataFromMemberPoints}
+        />
       </div>
-      <div className="min-w-40 min-h-10 flex flex-col justify-center">
-        <p>{prediction.team_two_name}</p>
-        <p>{prediction.team_two_score}</p>
-      </div>
-    </div>
+      <div>Points : {dataFromMemberPoints}</div>
+    </>
   );
 }
 

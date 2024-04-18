@@ -2,6 +2,8 @@ import React from "react";
 import PredictionScores from "./PredictionScores";
 
 function MatchScores({ match, predictions, selected, user }: any) {
+  const currentUser = user;
+
   return (
     <div className="bg-white border-2 border-amber-500 max-w-lg rounded overflow-hidden shadow-lg mx-auto my-5 hover:bg-[#f7fcfe]">
       <p className="text-center text-xs my-4">
@@ -40,6 +42,7 @@ function MatchScores({ match, predictions, selected, user }: any) {
                     prediction={prediction}
                     match={match}
                     selected={match.id}
+                    user={currentUser}
                   />
                 );
               })}
