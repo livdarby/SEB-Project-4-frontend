@@ -120,7 +120,7 @@ function Predictions({ user }: any) {
           PREDICTIONS
         </h1>
         <div className="flex justify-center flex-wrap grid-cols-2 w-full">
-          {!databaseMatches && <p>Loading...</p>}
+          {!databaseMatches && <p className="h-screen">Loading...</p>}
           {databaseMatches
             ?.filter((match: any) => {
               return !match.match_date.includes("Mar") && match.id !== 1;

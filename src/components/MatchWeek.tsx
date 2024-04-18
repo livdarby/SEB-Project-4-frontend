@@ -1,5 +1,6 @@
 import React from "react";
 import MatchScores from "./MatchScores";
+import axios from "axios";
 
 function MatchWeek({ user, selected, userPoints }: any) {
   const [matches, setMatches] = React.useState<any>(null);
@@ -54,7 +55,7 @@ function MatchWeek({ user, selected, userPoints }: any) {
         Running total: {userPoints}
       </p>
       {!matches && selected !== 34 && (
-        <p className="text-center">Loading results...</p>
+        <p className="text-center h-screen">Loading results...</p>
       )}
       {!matches && selected === 34 && (
         <p className="text-center">Check back next week for results</p>

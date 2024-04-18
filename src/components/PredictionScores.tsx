@@ -1,22 +1,17 @@
 import React from "react";
+import axios from "axios";
 
-function PredictionScores({
-  prediction,
-  match,
-  selected,
-  user,
-}: any) {
+function PredictionScores({ prediction, match, selected, user }: any) {
   const [backgroundColour, setBackgroundColour] = React.useState("");
   const [points, setPoints] = React.useState(null);
   const token = localStorage.getItem("token");
-
 
   async function checkPoints() {
     const resp = await fetch(`/api/predictionresult/${prediction.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await resp.json();
-    setPoints(data.points)
+    setPoints(data.points);
   }
 
   React.useEffect(() => {
@@ -24,13 +19,9 @@ function PredictionScores({
   }, []);
 
   function checkScores() {
-    if (
-      points === 3
-    ) {
+    if (points === 3) {
       setBackgroundColour("bg-green-400");
-    } else if (
-      points === 1
-    ) {
+    } else if (points === 1) {
       setBackgroundColour("bg-amber-300");
     } else {
       setBackgroundColour("bg-rose-300");

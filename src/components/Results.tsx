@@ -1,9 +1,12 @@
 import React from "react";
 import MatchWeek from "./MatchWeek";
+import axios from "axios";
 
 function Results({ user }: any) {
   const [selected, setSelected] = React.useState<any>(32);
   const [userPoints, setUserPoints] = React.useState<any>(null);
+  const [userPointsPopulated, setUserPointsPopulated] = React.useState(false)
+  const [userScoreUpdated, setUserScoreUpdated] = React.useState(false)
   const currentUser = user;
   const token = localStorage.getItem("token");
 
@@ -18,11 +21,27 @@ function Results({ user }: any) {
     });
     const data = await resp.json();
     setUserPoints(data.message)
+    setUserPointsPopulated(true)
+  }
+
+  async function updateUserTotalScore() {
+    await axios.put(
+      `/api/user/${user.id}`,
+      { total_score: userPoints },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   }
 
   React.useEffect(() => {
     getUserPoints();
   }, []);
+
+  if (userPointsPopulated && !userScoreUpdated) {
+    updateUserTotalScore()
+    setUserScoreUpdated(true)
+  }
 
   return (
     <>
