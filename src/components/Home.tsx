@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 function Home({ user }: any) {
   return (
     <>
-      <section className="bg-[#d3ecfb] h-screen">
+      <section className="bg-[#d3ecfb] min-h-screen">
         {user && (
           <h1 className="mt--2 text-center text-3xl tracking-wide py-10 font-marker tracking-widest text-[#1884ef]">
             Welcome, {user.username}

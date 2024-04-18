@@ -47,7 +47,7 @@ function MatchWeek({ user, selected, userPoints }: any) {
   }
 
   return (
-    <form className="bg-[#d3ecfb]">
+    <form className="bg-[#d3ecfb] min-h-screen">
       <h1 className="text-center text-3xl tracking-wide py-10 font-marker tracking-widest text-[#1884ef]">
         RESULTS
       </h1>
