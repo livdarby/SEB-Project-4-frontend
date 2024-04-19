@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import { baseUrl } from "../config";
 
 function PredictionScores({ prediction, match, selected, user }: any) {
   const [backgroundColour, setBackgroundColour] = React.useState("");
@@ -7,7 +7,7 @@ function PredictionScores({ prediction, match, selected, user }: any) {
   const token = localStorage.getItem("token");
 
   async function checkPoints() {
-    const resp = await fetch(`/api/predictionresult/${prediction.id}`, {
+    const resp = await fetch(`${baseUrl}/predictionresult/${prediction.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await resp.json();

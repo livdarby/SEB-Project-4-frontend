@@ -3,6 +3,7 @@ import React from "react";
 import { SyntheticEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../config";
 
 function MatchCard({
   date_created,
@@ -35,7 +36,7 @@ function MatchCard({
 
   React.useEffect(() => {
     async function getMatchById() {
-      const resp = await fetch(`/api/match/${id}`, {
+      const resp = await fetch(`${baseUrl}/match/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await resp.json();
@@ -61,7 +62,7 @@ function MatchCard({
   }, [matchModel]);
 
   async function getPredictionsByUser(id: any) {
-    const resp = await fetch(`/api/predictions/${user.id}`, {
+    const resp = await fetch(`${baseUrl}/predictions/${user.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await resp.json();
@@ -78,11 +79,11 @@ function MatchCard({
     const token = localStorage.getItem("token");
     e.preventDefault();
     if (selectedEdit) {
-      await axios.put(`/api/predictions/${predictions[0].id}`, formData, {
+      await axios.put(`${baseUrl}/predictions/${predictions[0].id}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
     } else {
-      await axios.post("/api/predictions", formData, {
+      await axios.post(`${baseUrl}/predictions`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
     }

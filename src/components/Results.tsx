@@ -1,6 +1,7 @@
 import React from "react";
 import MatchWeek from "./MatchWeek";
 import axios from "axios";
+import { baseUrl } from "../config";
 
 function Results({ user }: any) {
   const [selected, setSelected] = React.useState<any>(32);
@@ -18,7 +19,7 @@ function Results({ user }: any) {
   }
 
   async function getUserPoints() {
-    const resp = await fetch(`/api/checkpredictions/${user.id}`, {
+    const resp = await fetch(`${baseUrl}/checkpredictions/${user.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await resp.json();
@@ -28,7 +29,7 @@ function Results({ user }: any) {
 
   async function updateUserTotalScore() {
     await axios.put(
-      `/api/user/${user.id}`,
+      `${baseUrl}/user/${user.id}`,
       { total_score: userPoints },
       {
         headers: { Authorization: `Bearer ${token}` },

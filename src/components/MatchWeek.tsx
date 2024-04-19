@@ -1,6 +1,6 @@
 import React from "react";
 import MatchScores from "./MatchScores";
-import axios from "axios";
+import { baseUrl } from "../config";
 
 function MatchWeek({ user, selected, userPoints, dataRendered, setDataRendered }: any) {
   const [matches, setMatches] = React.useState<any>(null);
@@ -24,7 +24,7 @@ function MatchWeek({ user, selected, userPoints, dataRendered, setDataRendered }
   }, [!dataRendered])
 
   async function getLastWeekMatches() {
-    const resp = await fetch("/api/matches");
+    const resp = await fetch(`${baseUrl}/matches`);
     const data = await resp.json();
     if (selected === 33) {
       const filtered_data = data.filter((match: any) => {
@@ -44,7 +44,7 @@ function MatchWeek({ user, selected, userPoints, dataRendered, setDataRendered }
   }
 
   async function findPredictionByUser() {
-    const resp = await fetch(`/api/predictions/${user.id}`, {
+    const resp = await fetch(`${baseUrl}/predictions/${user.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await resp.json();

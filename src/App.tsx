@@ -9,6 +9,7 @@ import axios from "axios";
 import SignUp from "./components/SignUp";
 import Results from "./components/Results";
 import Leaderboard from "./components/Leaderboard";
+import { baseUrl } from "./config";
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -22,7 +23,7 @@ function App() {
 
   async function fetchUser() {
     const token = localStorage.getItem("token");
-    const resp = await axios.get("/api/user", {
+    const resp = await axios.get(`${baseUrl}/user`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setUser(resp.data);

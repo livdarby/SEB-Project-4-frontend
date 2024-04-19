@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { SyntheticEvent } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../config";
 
 function SignIn({ fetchUser }: any) {
   const [formData, setFormData] = React.useState({
@@ -30,7 +31,7 @@ function SignIn({ fetchUser }: any) {
     console.log("button");
     try {
       e.preventDefault();
-      const resp = await axios.post("/api/login", formData);
+      const resp = await axios.post(`${baseUrl}/login`, formData);
       console.log(resp.data);
       localStorage.setItem("token", resp.data.token);
       setToken(localStorage.getItem("token"));

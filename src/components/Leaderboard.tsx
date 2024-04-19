@@ -1,4 +1,5 @@
 import React from "react";
+import { baseUrl } from "../config";
 
 function Leaderboard({ user }: any) {
   const token = localStorage.getItem("token");
@@ -7,7 +8,7 @@ function Leaderboard({ user }: any) {
   console.log(sortedUsers);
 
   async function getUsers() {
-    const resp = await fetch("/api/users", {
+    const resp = await fetch(`${baseUrl}/users`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await resp.json();

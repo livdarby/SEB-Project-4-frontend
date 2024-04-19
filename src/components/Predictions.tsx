@@ -2,6 +2,7 @@ import React from "react";
 import MatchCard from "./MatchCard";
 import { IMatch, IDatabaseMatch } from "../../interfaces/match";
 import axios from "axios";
+import { baseUrl } from "../config";
 
 function Predictions({ user }: any) {
   const [matches, setMatches] = React.useState<IMatch | any>(null);
@@ -44,7 +45,7 @@ function Predictions({ user }: any) {
 
   async function fetchMatches() {
     for (const club of premierLeagueClubs) {
-      const resp = await fetch(`/api/new/matches/${club}`);
+      const resp = await fetch(`${baseUrl}/new/matches/${club}`);
       const data = await resp.json();
       const filtered_data = data.filter((match: any) =>
         checkDates(
@@ -68,7 +69,7 @@ function Predictions({ user }: any) {
   // }, []);
 
   async function getDabaseMatches() {
-    const resp = await fetch("/api/matches");
+    const resp = await fetch(`${baseUrl}/matches`);
     const data = await resp.json();
     console.log(data);
     const filtered_db_data = data.filter((match: any) => {
@@ -102,7 +103,7 @@ function Predictions({ user }: any) {
 
   if (matches && !areMatchesPosted) {
     async function postMatches() {
-      const resp = await axios.post("/api/matches", matches);
+      const resp = await axios.post(`${baseUrl}/matches`, matches);
     }
     postMatches();
     setAreMatchesPosted(true);
