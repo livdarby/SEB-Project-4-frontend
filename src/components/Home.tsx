@@ -1,4 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
+import home_image_one from "../../assets/home_image_one.avif"
+import home_image_two from "../../assets/home_image_two.webp"
+import home_image_three from "../../assets/home_image_three.jpeg"
 
 function Home({ user }: any) {
   return (
@@ -19,7 +22,7 @@ function Home({ user }: any) {
             <div className="md:shrink-0">
               <img
                 className="h-48 w-full object-cover md:h-full md:w-48"
-                src="../../assets/bg.avif"
+                src={home_image_one}
                 alt="Premier League stock photo"
               />
             </div>
@@ -51,7 +54,7 @@ function Home({ user }: any) {
             <div className="md:shrink-0">
               <img
                 className="h-48 w-full object-cover md:h-full md:w-48"
-                src="../../assets/bg2.webp"
+                src={home_image_two}
                 alt="Premier League stock photo"
               />
             </div>
@@ -62,7 +65,7 @@ function Home({ user }: any) {
             <div className="md:shrink-0">
               <img
                 className="h-48 w-full object-cover md:h-full md:w-48"
-                src="../../assets/pllogo.jpeg"
+                src={home_image_three}
                 alt="Premier League stock photo"
               />
             </div>

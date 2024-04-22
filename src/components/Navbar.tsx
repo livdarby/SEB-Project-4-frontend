@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import soccer_ball from "../../assets/soccer-ball.png"
 
 function Navbar({ user, setUser }: any) {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Navbar({ user, setUser }: any) {
       <nav className="bg-[#69c0f0] flex items-center justify-between flex-wrap p-6">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
           <img
-            src="../../assets/soccer-ball.png"
+            src={soccer_ball}
             className="fill-current"
             height="60"
             width="60"
