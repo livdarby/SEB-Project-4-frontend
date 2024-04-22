@@ -13,7 +13,7 @@ function SignIn({ fetchUser }: any) {
   const [dataInputted, setDataInputted] = React.useState(false);
 
   const [token, setToken] = React.useState(localStorage.getItem("token"));
-  console.log(token);
+  // console.log(token);
 
   const [errorMessage, setErrorMessage] = React.useState("");
 
@@ -28,11 +28,10 @@ function SignIn({ fetchUser }: any) {
   }
 
   async function handleSubmit(e: SyntheticEvent) {
-    console.log("button");
     try {
       e.preventDefault();
       const resp = await axios.post(`${baseUrl}/login`, formData);
-      console.log(resp.data);
+      // console.log(resp.data);
       localStorage.setItem("token", resp.data.token);
       setToken(localStorage.getItem("token"));
       fetchUser();
@@ -42,7 +41,7 @@ function SignIn({ fetchUser }: any) {
     }
   }
 
-  console.log(formData);
+  // console.log(formData);
 
   return (
     <section className="bg-[#d3ecfb] h-screen flex pt-10">

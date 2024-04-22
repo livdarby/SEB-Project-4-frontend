@@ -6,7 +6,7 @@ function Leaderboard({ user }: any) {
   const [users, setUsers] = React.useState<any>(null);
   const [sortedUsers, setSortedUsers] = React.useState<any>(null);
   const [accuracyScore, setAccuracyScore] = React.useState<any>(null);
-  console.log(accuracyScore);
+  // console.log(accuracyScore);
 
   async function getUsers() {
     const resp = await fetch(`${baseUrl}/users`, {

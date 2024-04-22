@@ -32,7 +32,9 @@ function MatchCard({
     team_two_score: "",
     match: null,
   });
+  const [matchHasOccurred, setMatchHasOccurred] = React.useState(false);
   const [selectedEdit, setSelectedEdit] = React.useState(false);
+  console.log(matchHasOccurred);
 
   React.useEffect(() => {
     async function getMatchById() {
@@ -43,6 +45,9 @@ function MatchCard({
       setMatchModel(data);
     }
     getMatchById();
+    if (new Date(match_date) <= new Date()) {
+      setMatchHasOccurred(true);
+    }
   }, []);
 
   React.useEffect(() => {
@@ -119,7 +124,10 @@ function MatchCard({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full max-w-lg mx-5 flex items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-lg mx-5 flex items-center"
+      >
         <div className="bg-white border-solid border-2 border-amber-500 flex flex-col items-center w-full -mx-3 mb-6 text-center hover:bg-orange-200">
           <p className="my-4 text-xs">
             {match_date.substring(
@@ -134,7 +142,7 @@ function MatchCard({
             <input
               className={
                 "text-center disabled:opacity-50 appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 mb-2 leading-tight focus:outline-none focus:bg-white " +
-                (ScoreOneInputted || predictionSubmitted
+                (ScoreOneInputted || predictionSubmitted || matchHasOccurred
                   ? "focus:border-gray-500 border-gray-500 bg-gray-300"
                   : "border-amber-600")
               }
@@ -148,7 +156,7 @@ function MatchCard({
                   : formData.team_one_score
               }
               onChange={handleChange}
-              disabled={predictionSubmitted || (today >= match && true)}
+              disabled={predictionSubmitted || matchHasOccurred}
             />
             {!ScoreOneInputted && !predictionSubmitted && (
               <p className="text-amber-600 text-xs italic">
@@ -163,7 +171,7 @@ function MatchCard({
             <input
               className={
                 "text-center disabled:opacity-50 appearance-none block w-full bg-gray-100 text-gray-700 border rounded py-3 px-4 mb-2 leading-tight focus:outline-none focus:bg-white " +
-                (ScoreTwoInputted || predictionSubmitted
+                (ScoreTwoInputted || predictionSubmitted || matchHasOccurred
                   ? "focus:border-gray-500 border-gray-500 bg-gray-300"
                   : "border-amber-600")
               }
@@ -177,7 +185,7 @@ function MatchCard({
                   : formData.team_two_score
               }
               onChange={handleChange}
-              disabled={predictionSubmitted || (today >= match && true)}
+              disabled={predictionSubmitted || matchHasOccurred}
             />
 
             {!ScoreTwoInputted && !predictionSubmitted && (
@@ -191,7 +199,7 @@ function MatchCard({
               className="min-w-20 h-15 flex-shrink-0 bg-[#1884ef] hover:bg-white hover:text-[#1884ef] border-[#1884ef] hover:border-[#1884ef] text-sm border-2 text-white py-1 px-2 rounded disabled:opacity-40"
               type="button"
               onClick={handleSubmit}
-              disabled={predictionSubmitted && true}
+              disabled={(predictionSubmitted || matchHasOccurred) && true}
             >
               Submit
             </button>
@@ -199,6 +207,7 @@ function MatchCard({
               className="min-w-20 h-15 flex-shrink-0 bg-[#1884ef] hover:bg-white hover:text-[#1884ef] border-[#1884ef] hover:border-[#1884ef] text-sm border-2 text-white py-1 px-2 rounded disabled:opacity-40"
               type="button"
               onClick={handleEdit}
+              disabled={matchHasOccurred}
               // disabled={predictionSubmitted && true}
             >
               Edit

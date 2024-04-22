@@ -11,7 +11,7 @@ function Results({ user }: any) {
   const currentUser = user;
   const token = localStorage.getItem("token");
   const [dataRendered, setDataRendered] = React.useState(false)
-  console.log("user points: ", userPoints)
+  // console.log("user points: ", userPoints)
 
   function handleClick(e: any) {
     e.preventDefault();

@@ -41,7 +41,7 @@ function Predictions({ user }: any) {
   let clubsToRender = [] as any;
   let clubsFetched = 0;
 
-  console.log("match data", matches);
+  // console.log("match data", matches);
 
   async function fetchMatches() {
     for (const club of premierLeagueClubs) {
@@ -71,7 +71,7 @@ function Predictions({ user }: any) {
   async function getDabaseMatches() {
     const resp = await fetch(`${baseUrl}/matches`);
     const data = await resp.json();
-    console.log(data);
+    // console.log(data);
     const filtered_db_data = data.filter((match: any) => {
       return (
         new Date(match.match_date) > new Date("Mon, 22 Apr 2024") &&

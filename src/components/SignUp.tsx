@@ -22,8 +22,8 @@ function SignUp() {
     invite_code: "",
   });
 
-  console.log(formData);
-  console.log(errorData);
+  // console.log(formData);
+  // console.log(errorData);
 
   function handleChange(e: any) {
     const fieldName = e.target.name;
@@ -37,11 +37,11 @@ function SignUp() {
     try {
       e.preventDefault();
       const resp = await axios.post(`${baseUrl}/signup`, formData);
-      console.log(resp.data);
+      // console.log(resp.data);
       navigate("/signin");
     } catch (e: any) {
       setErrorData(e.response.data.errors);
-      console.log(errorData);
+      // console.log(errorData);
     }
   }
   return (

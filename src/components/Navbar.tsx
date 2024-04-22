@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import soccer_ball from "../../assets/soccer-ball.png"
+import soccer_ball from "../../assets/soccer-ball.png";
 
 function Navbar({ user, setUser }: any) {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function Navbar({ user, setUser }: any) {
             viewBox="0 0 54 54"
           ></svg>
           <span className="font-marker font-semibold text-2xl tracking-widest">
-            Premier Picks
+            <Link to="/">Premier Picks</Link>
           </span>
         </div>
         <div className="block lg:hidden">
