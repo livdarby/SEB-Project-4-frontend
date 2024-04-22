@@ -1,5 +1,6 @@
 import React from "react";
 import { baseUrl } from "../config";
+import axios from "axios";
 
 function PredictionScores({ prediction, match, selected, user }: any) {
   const [backgroundColour, setBackgroundColour] = React.useState("");
@@ -13,6 +14,7 @@ function PredictionScores({ prediction, match, selected, user }: any) {
     const data = await resp.json();
     setPoints(data.points);
   }
+
 
   React.useEffect(() => {
     checkPoints();

@@ -5,7 +5,8 @@ function Leaderboard({ user }: any) {
   const token = localStorage.getItem("token");
   const [users, setUsers] = React.useState<any>(null);
   const [sortedUsers, setSortedUsers] = React.useState<any>(null);
-  console.log(sortedUsers);
+  const [accuracyScore, setAccuracyScore] = React.useState<any>(null);
+  console.log(accuracyScore);
 
   async function getUsers() {
     const resp = await fetch(`${baseUrl}/users`, {
@@ -13,6 +14,14 @@ function Leaderboard({ user }: any) {
     });
     const data = await resp.json();
     setUsers(data);
+  }
+
+  async function getAccuracy() {
+    const resp = await fetch(`${baseUrl}/all_accuracy`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await resp.json();
+    setAccuracyScore(data.message);
   }
 
   if (users && !sortedUsers) {
@@ -24,6 +33,7 @@ function Leaderboard({ user }: any) {
 
   React.useEffect(() => {
     getUsers();
+    getAccuracy();
   }, []);
 
   return (
@@ -59,7 +69,15 @@ function Leaderboard({ user }: any) {
                         {user.total_score}
                       </td>
                       <td className="bg-white uppercase tracking-wide text-gray-700 text-s font-bold text-center border-2 border-gray-300">
-                        {Math.round((user.total_score / 60) * 100)}%
+                        {accuracyScore && (
+                          // <p>{accuracyScore[0].accuracy_score}</p>}
+                          <p>
+                            {
+                              Math.round(accuracyScore.filter((score: any) => { return score.user_id === user.id;
+                              })[0].accuracy_score)
+                            }%
+                          </p>
+                        )}
                       </td>
                     </tr>
                   </>

@@ -2,7 +2,13 @@ import React from "react";
 import MatchScores from "./MatchScores";
 import { baseUrl } from "../config";
 
-function MatchWeek({ user, selected, userPoints, dataRendered, setDataRendered }: any) {
+function MatchWeek({
+  user,
+  selected,
+  userPoints,
+  dataRendered,
+  setDataRendered,
+}: any) {
   const [matches, setMatches] = React.useState<any>(null);
   const [predictions, setPredictions] = React.useState<any>(null);
   const week33Start = new Date("Sat, 13 Apr 2024");
@@ -10,18 +16,20 @@ function MatchWeek({ user, selected, userPoints, dataRendered, setDataRendered }
   const token = localStorage.getItem("token");
   const week32Start = new Date("Fri, 5 Apr 2024");
   const week32End = new Date("Mon, 8 Apr 2024");
+  const week34Start = new Date("Fri, 20 Apr 2024");
+  const week34End = new Date("Mon, 22 Apr 2024");
   // console.log(predictions);
   const currentUser = user;
   const [areMatchesRendered, setAreMatchesRendered] = React.useState(false);
-  console.log(selected);
-  console.log(matches)
-  console.log(predictions)
+  // console.log(selected);
+  // console.log(matches);
+  // console.log(predictions);
 
   React.useEffect(() => {
-    getLastWeekMatches()
-    findPredictionByUser()
-    setDataRendered(true)
-  }, [!dataRendered])
+    getLastWeekMatches();
+    findPredictionByUser();
+    setDataRendered(true);
+  }, [!dataRendered]);
 
   async function getLastWeekMatches() {
     const resp = await fetch(`${baseUrl}/matches`);
@@ -39,6 +47,12 @@ function MatchWeek({ user, selected, userPoints, dataRendered, setDataRendered }
       });
       setMatches(filtered_data);
     } else if (selected === 34) {
+      const filtered_data = data.filter((match: any) => {
+        const matchDate = new Date(match.match_date);
+        return matchDate >= week34Start && matchDate <= week34End;
+      });
+      setMatches(filtered_data);
+    } else if ([29, 35, 36, 37, 38].includes(selected)) {
       setMatches(null);
     }
   }
@@ -48,7 +62,7 @@ function MatchWeek({ user, selected, userPoints, dataRendered, setDataRendered }
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await resp.json();
-    console.log(data)
+    // console.log(data);
     setPredictions(data);
   }
 
@@ -60,11 +74,18 @@ function MatchWeek({ user, selected, userPoints, dataRendered, setDataRendered }
       <p className="uppercase tracking-wide text-gray-700 text-xs font-bold text-center">
         Running total: {userPoints}
       </p>
-      {!matches && selected !== 34 && (
+      {!matches && ![29, 35, 36, 37, 38].includes(selected) && (
         <p className="text-center h-screen">Loading results...</p>
       )}
-      {!matches && selected === 34 && (
-        <p className="text-center">Check back next week for results</p>
+      {!matches && [29].includes(selected) && (
+        <p className="text-center mt-10 uppercase text-xs font-bold tracking-wide text-gray-700">
+          MW29 matches rescheduled due to postponements
+        </p>
+      )}
+      {!matches && [29, 35, 36, 37, 38].includes(selected) && (
+        <p className="text-center mt-10 uppercase text-xs font-bold tracking-wide text-gray-700">
+          Check back for results
+        </p>
       )}
       {matches &&
         matches.map((match: any) => {

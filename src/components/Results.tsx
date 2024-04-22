@@ -11,6 +11,7 @@ function Results({ user }: any) {
   const currentUser = user;
   const token = localStorage.getItem("token");
   const [dataRendered, setDataRendered] = React.useState(false)
+  console.log("user points: ", userPoints)
 
   function handleClick(e: any) {
     e.preventDefault();
@@ -89,6 +90,76 @@ function Results({ user }: any) {
             }
           >
             Week 34
+          </a>
+        </li>
+        <li className="-mb-px mr-1">
+          <a
+            onClick={handleClick}
+            id="29"
+            className={
+              "bg-[#d3ecfb] inline-block py-2 px-4 font-semibold block uppercase tracking-wide " +
+              (selected === 29
+                ? "border-l border-t border-r rounded-t text-[#288df1] border-2 border-white bg-white/50"
+                : "text-[#69c0f0] hover:text-[#288df1]")
+            }
+          >
+            Week 29
+          </a>
+        </li>
+        <li className="-mb-px mr-1">
+          <a
+            onClick={handleClick}
+            id="35"
+            className={
+              "bg-[#d3ecfb] inline-block py-2 px-4 font-semibold block uppercase tracking-wide " +
+              (selected === 35
+                ? "border-l border-t border-r rounded-t text-[#288df1] border-2 border-white bg-white/50"
+                : "text-[#69c0f0] hover:text-[#288df1]")
+            }
+          >
+            Week 35
+          </a>
+        </li>
+        <li className="-mb-px mr-1">
+          <a
+            onClick={handleClick}
+            id="36"
+            className={
+              "bg-[#d3ecfb] inline-block py-2 px-4 font-semibold block uppercase tracking-wide " +
+              (selected === 36
+                ? "border-l border-t border-r rounded-t text-[#288df1] border-2 border-white bg-white/50"
+                : "text-[#69c0f0] hover:text-[#288df1]")
+            }
+          >
+            Week 36
+          </a>
+        </li>
+        <li className="-mb-px mr-1">
+          <a
+            onClick={handleClick}
+            id="37"
+            className={
+              "bg-[#d3ecfb] inline-block py-2 px-4 font-semibold block uppercase tracking-wide " +
+              (selected === 37
+                ? "border-l border-t border-r rounded-t text-[#288df1] border-2 border-white bg-white/50"
+                : "text-[#69c0f0] hover:text-[#288df1]")
+            }
+          >
+            Week 37
+          </a>
+        </li>
+        <li className="-mb-px mr-1">
+          <a
+            onClick={handleClick}
+            id="38"
+            className={
+              "bg-[#d3ecfb] inline-block py-2 px-4 font-semibold block uppercase tracking-wide " +
+              (selected === 38
+                ? "border-l border-t border-r rounded-t text-[#288df1] border-2 border-white bg-white/50"
+                : "text-[#69c0f0] hover:text-[#288df1]")
+            }
+          >
+            Week 38
           </a>
         </li>
       </ul>

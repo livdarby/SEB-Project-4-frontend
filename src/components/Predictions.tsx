@@ -74,8 +74,8 @@ function Predictions({ user }: any) {
     console.log(data);
     const filtered_db_data = data.filter((match: any) => {
       return (
-        new Date(match.match_date) > new Date("Tue, 16 Apr 2024") &&
-        new Date(match.match_date) < new Date("Mon, 22 Apr 2024")
+        new Date(match.match_date) > new Date("Mon, 22 Apr 2024") &&
+        new Date(match.match_date) < new Date("Fri, 26 Apr 2024")
       );
     });
     setDatabaseMatches(filtered_db_data);
