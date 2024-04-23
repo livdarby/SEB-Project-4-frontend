@@ -1,13 +1,23 @@
 import { Link, useNavigate } from "react-router-dom";
+import React from "react";
 import soccer_ball from "../../assets/soccer-ball.png";
 
 function Navbar({ user, setUser }: any) {
+  const [menuDisplayed, setMenuDisplayed] = React.useState(false);
   const navigate = useNavigate();
 
   function logout() {
     localStorage.removeItem("token");
     setUser(null);
     navigate("/");
+  }
+
+  function hamburgerMenu() {
+    if (!menuDisplayed && window.innerWidth < 1024) {
+      setMenuDisplayed(true);
+    } else if (menuDisplayed && window.innerWidth < 1024) {
+      setMenuDisplayed(false);
+    }
   }
 
   return (
@@ -31,9 +41,12 @@ function Navbar({ user, setUser }: any) {
           </span>
         </div>
         <div className="block lg:hidden">
-          <button className="flex items-center px-3 py-2 border rounded border-teal-400 hover:text-white hover:border-white">
+          <button
+            onClick={hamburgerMenu}
+            className="flex items-center px-3 py-2 border rounded border-gray-700 bg-[#d3ecfb] hover:text-white hover:bg-[#69c0f0] hover:border-white"
+          >
             <svg
-              className="fill-current h-3 w-3"
+              className="fill-current h-3 w-3 "
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -46,14 +59,20 @@ function Navbar({ user, setUser }: any) {
           <div className="text-sm lg:flex-grow">
             <Link
               to="/"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+              className={
+                "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
+                (!menuDisplayed && "hidden")
+              }
             >
               Home
             </Link>
             {user && (
               <Link
                 to="/predictions"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                className={
+                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
+                  (!menuDisplayed && "hidden")
+                }
               >
                 Predictions
               </Link>
@@ -61,7 +80,10 @@ function Navbar({ user, setUser }: any) {
             {user && (
               <Link
                 to="/results"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                className={
+                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
+                  (!menuDisplayed && "hidden")
+                }
               >
                 Results
               </Link>
@@ -69,7 +91,10 @@ function Navbar({ user, setUser }: any) {
             {user && (
               <Link
                 to="/leaderboard"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                className={
+                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
+                  (!menuDisplayed && "hidden")
+                }
               >
                 Leaderboard
               </Link>
@@ -79,7 +104,10 @@ function Navbar({ user, setUser }: any) {
             {!user && (
               <Link
                 to="/signin"
-                className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-orange-600 hover:bg-white mt-4 lg:mt-0"
+                className={
+                  "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-orange-600 hover:bg-white mt-4 lg:mt-0 " +
+                  (!menuDisplayed && "hidden")
+                }
               >
                 Members Area
               </Link>
@@ -88,7 +116,10 @@ function Navbar({ user, setUser }: any) {
               <Link
                 to="/signin"
                 onClick={logout}
-                className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-amber-500 hover:bg-white mt-4 lg:mt-0 hover:border-amber-500"
+                className={
+                  "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-amber-500 hover:bg-white mt-4 lg:mt-0 hover:border-amber-500 " +
+                  (!menuDisplayed && "hidden")
+                }
               >
                 Sign Out
               </Link>

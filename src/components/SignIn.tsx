@@ -16,6 +16,7 @@ function SignIn({ fetchUser }: any) {
   // console.log(token);
 
   const [errorMessage, setErrorMessage] = React.useState("");
+  console.log(errorMessage);
 
   const navigate = useNavigate();
 
@@ -25,6 +26,12 @@ function SignIn({ fetchUser }: any) {
     const newFormData = structuredClone(formData);
     newFormData[fieldName as keyof typeof formData] = e.target.value;
     setFormData(newFormData);
+    setErrorMessage("")
+    if (newFormData.email || newFormData.password) {
+      setDataInputted(true);
+    } else {
+      setDataInputted(false);
+    }
   }
 
   async function handleSubmit(e: SyntheticEvent) {
@@ -37,7 +44,7 @@ function SignIn({ fetchUser }: any) {
       fetchUser();
       navigate("/");
     } catch (e: any) {
-      setErrorMessage(e.response.data.message);
+      setErrorMessage(e);
     }
   }
 
@@ -89,6 +96,11 @@ function SignIn({ fetchUser }: any) {
               </p>
             )}
           </div>
+          {errorMessage && (
+            <p className="uppercase text-orange-700 tracking-wide text-xs font-bold mb-2">
+              Unsuccessful, Please try again.
+            </p>
+          )}
           <div className="flex items-center justify-between">
             <button
               onClick={handleSubmit}

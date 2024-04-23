@@ -15,33 +15,36 @@ function SignUp() {
     invite_code: "",
   });
 
-  const [errorData, setErrorData] = React.useState({
-    email: "",
-    username: "",
-    password: "",
-    invite_code: "",
-  });
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   // console.log(formData);
-  // console.log(errorData);
+  console.log(errorMessage);
 
   function handleChange(e: any) {
     const fieldName = e.target.name;
     const newFormData = structuredClone(formData);
     newFormData[fieldName as keyof typeof formData] = e.target.value;
     setFormData(newFormData);
-    setDataInputted(true);
+    if (
+      newFormData.email ||
+      newFormData.username ||
+      newFormData.password ||
+      newFormData.invite_code
+    ) {
+      setDataInputted(true);
+    } else {
+      setDataInputted(false)
+    }
+    setErrorMessage("")
   }
 
   async function handleSubmit(e: SyntheticEvent) {
     try {
       e.preventDefault();
       const resp = await axios.post(`${baseUrl}/signup`, formData);
-      // console.log(resp.data);
       navigate("/signin");
     } catch (e: any) {
-      setErrorData(e.response.data.errors);
-      // console.log(errorData);
+      setErrorMessage(e);
     }
   }
   return (
@@ -130,6 +133,11 @@ function SignUp() {
             {!dataInputted && (
               <p className="text-amber-600 text-xs italic">
                 Please input all fields.
+              </p>
+            )}
+            {errorMessage && (
+              <p className="uppercase text-orange-700 tracking-wide text-xs font-bold mb-2">
+                Unsuccessful, Please try again.
               </p>
             )}
           </div>
