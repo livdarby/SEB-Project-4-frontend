@@ -7,13 +7,18 @@ function Leaderboard({ user }: any) {
   const [sortedUsers, setSortedUsers] = React.useState<any>(null);
   const [accuracyScore, setAccuracyScore] = React.useState<any>(null);
   // console.log(accuracyScore);
+  console.log(users);
 
   async function getUsers() {
     const resp = await fetch(`${baseUrl}/users`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await resp.json();
-    setUsers(data);
+    setUsers(
+      data.filter((data: any) => {
+        return data.username !== "admin";
+      })
+    );
   }
 
   async function getAccuracy() {
@@ -72,10 +77,12 @@ function Leaderboard({ user }: any) {
                         {accuracyScore && (
                           // <p>{accuracyScore[0].accuracy_score}</p>}
                           <p>
-                            {
-                              Math.round(accuracyScore.filter((score: any) => { return score.user_id === user.id;
-                              })[0].accuracy_score)
-                            }%
+                            {Math.round(
+                              accuracyScore.filter((score: any) => {
+                                return score.user_id === user.id;
+                              })[0].accuracy_score
+                            )}
+                            %
                           </p>
                         )}
                       </td>
