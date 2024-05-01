@@ -7,7 +7,7 @@ function Leaderboard({ user }: any) {
   const [sortedUsers, setSortedUsers] = React.useState<any>(null);
   const [accuracyScore, setAccuracyScore] = React.useState<any>(null);
   // console.log(accuracyScore);
-  console.log(users);
+  // console.log(users);
 
   async function getUsers() {
     const resp = await fetch(`${baseUrl}/users`, {
@@ -16,7 +16,7 @@ function Leaderboard({ user }: any) {
     const data = await resp.json();
     setUsers(
       data.filter((data: any) => {
-        return data.username !== "admin";
+        return data.id !== 1;
       })
     );
   }

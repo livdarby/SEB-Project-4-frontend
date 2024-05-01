@@ -66,7 +66,7 @@ function Navbar({ user, setUser }: any) {
             >
               Home
             </Link>
-            {user && (
+            {user && user.id !== 1 && (
               <Link
                 to="/predictions"
                 className={
@@ -77,7 +77,7 @@ function Navbar({ user, setUser }: any) {
                 Predictions
               </Link>
             )}
-            {user && (
+            {user && user.id !== 1 && (
               <Link
                 to="/results"
                 className={
@@ -88,7 +88,7 @@ function Navbar({ user, setUser }: any) {
                 Results
               </Link>
             )}
-            {user && (
+            {user && user.id !== 1 && (
               <Link
                 to="/leaderboard"
                 className={
@@ -97,6 +97,28 @@ function Navbar({ user, setUser }: any) {
                 }
               >
                 Leaderboard
+              </Link>
+            )}
+            {user && user.id === 1 && (
+              <Link
+                to="/matches"
+                className={
+                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
+                  (!menuDisplayed && "hidden")
+                }
+              >
+                Post A Match
+              </Link>
+            )}
+            {user && user.id === 1 && (
+              <Link
+                to="/scoreupdate"
+                className={
+                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
+                  (!menuDisplayed && "hidden")
+                }
+              >
+                Update A Score
               </Link>
             )}
           </div>

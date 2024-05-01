@@ -10,6 +10,8 @@ import SignUp from "./components/SignUp";
 import Results from "./components/Results";
 import Leaderboard from "./components/Leaderboard";
 import { baseUrl } from "./config";
+import PostMatches from "./components/PostMatches";
+import ScoreUpdate from "./components/ScoreUpdate";
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -40,6 +42,8 @@ function App() {
           <Route path="/leaderboard" element={<Leaderboard user={user} />} />
           <Route path="/signin" element={<SignIn fetchUser={fetchUser} />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/matches" element={<PostMatches user={user} />} />
+          <Route path="/scoreupdate" element={<ScoreUpdate user={user} />} />
         </Routes>
       </Router>
     </>
