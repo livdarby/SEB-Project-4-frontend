@@ -17,6 +17,8 @@ This project was inspired by seeing friends editing and updating complicated Exc
 
 <br>Check out Premier Picks here: https://premier-picks.netlify.app/
 
+![predictions page screenshot](./assets/predictions-page-screenshot.png)
+
 ## Installation Instructions
 
 **Font-end:**
@@ -436,3 +438,31 @@ I wasn't able to get this working with the time I had available. I've never work
 ### Day Eight: Deployment & Presentations
 I deployed using Heroku and presented my project and code to the class. This was a great opportunity to reflect on everything I'd implemented and learnt over the past week!
 
+## Challenges
+My main challenge was working with the public API. I spent a lot of time querying it and cleaning the data, but unfortunately I wasn't able to use this code in my project, due to a limited search allowance and inability to set up the CronJob.
+
+Another challenge was getting the user results to update when clicking between the different Match Weeks in the frontend. Often the points and/or background colours were glitching and not updating dynamically. I used a dependency array to have the checkPredictions() function called through the useEffect only once the matches for the selected Match Week are successfully fetched.
+
+## Wins
+The responsive design was a big win with features like a hamburger menu for mobile view. I also really enjoyed implementing dynamic styling to improve the user experience, such as disabling submit and edits buttons, rendering input field prompts and error handling.
+
+Getting the total scores and accuracy scores through a backend route was also a big win for me. My tendancy is to think that this code should be written on the frontend, but I got really comfortable utilising different endpoints to send back exactly the information I needed my frontend to consume. 
+
+## Key Learnings/Takeaways
+- I learnt how to use a new CSS framework, Tailwind.
+- I learnt how to create a proxy between the external data source (Google Search via SerpApi) and the database. I learnt how to write code that fetches, processes, and stores data from the external source into the database, effectively acting as an intermediary or proxy for the data flow. This is not something we had covered in class and was a great learning experience.
+- It can take time to manipulate reponses from a Public API into a format that works for your use case.
+- User stories are invaluable when it comes to prioritising features and improving the UX/UI.
+
+## Bugs
+- The Members Login button is a bit glitchy and sometimes only appears under the hamburger menu (not on desktop full screen). I need to check the JS dispaly logic to fix this.
+
+## Future Improvements
+Seeing Premier Picks come to life has been so exciting. I am keen to continue developing the site in the hopes that it can be used publically for next season. 
+
+My wishlist of improvements includes:
+- Removing all hard coding for Match Weeks. Instead use a calendar format for users to switch between weeks. 
+- I have added an admin user account to post matches and results. However, I'd still like to see if I can automate this process through an API and CronJob.
+- Users should be given a breakdown of their points per week, rather than just a running total. 
+- I'd like to add functionality to create a league and invite friends. Users then have to use their league's invite code during sign-up to successfully create an account. 
+- The leaderboard should rank user score and accuracy for all users within their league. I'd also like a 'Global Leaderboard' that shows the user's peformance across all users in all leagues.
