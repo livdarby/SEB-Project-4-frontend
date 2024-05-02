@@ -1,14 +1,16 @@
 # Premier Picks
 
-## Projet Description
+![Premier Picks Homepage](./assets/pp-homepage.png)
+
+## Project Description
 Premier Picks is a predictions app, which allows users to join a league and submit predictions for the upcoming Premier League Match Week. 
 
 Users can edit their predictions up to the day before the match takes place, at which point the edit functionality is disabled.
 
-This project was inspired from seeing friends editing and updating complicated Excel spreadsheets manually each week for their predictions league. Some of the painpoints included:
+This project was inspired by seeing friends editing and updating complicated Excel spreadsheets manually each week for their predictions league. Some of the painpoints included:
 - Manually updating upcoming matches is time-consuming and relies on one person taking admin ownership. This causes bottlenecks whenever the admin is unavailable.
-- Someone has to review each members' predictions against the match results each week, and update the user score. Imagine a league of 10 people with 10 matches per week... that's a lot of admin!
-- When a match starts, most leagues rely on good faith from their members, in the hopes that they don't retrospectively update their prediction when noone's looking.
+- Someone has to review each members' predictions against the match results each week and update the user score. Imagine a league of 10 people with 10 matches per week... that's a lot of admin!
+- When a match starts, most leagues rely on good faith from their members, in the hopes that they don't retrospectively update their prediction when no one's looking.
 - And finally, user error happens!
 
 <br>Check out Premier Picks here: https://premier-picks.netlify.app/
@@ -74,13 +76,13 @@ I wanted to use [SerpAPI](https://serpapi.com/sports-results) (Google Search Res
 - The API is very inconsistent with the format and type of data returned. 
 
 ### Day Two: Cleaning the API Data
-I indentified that the results I needed from the API response was the sports_results key.
+I identified that the results I needed from the API response were in the sports_results key.
 
-However when using 'Premier League' in the search query, the API only returns 5 or 6 sports results i.e. it cannot return anything in the 'See More' section of the Google Search Result (see screenshot below).
+However, when using 'Premier League' in the search query, the API only returns 5 or 6 sports results i.e. it cannot return anything in the 'See More' section of the Google Search Result (see screenshot below).
 
 ![Google Search Result example](./assets/google-search-results.png)
 
-To get around this I created a list of all Premier League club names, looping through and using the club name as the API search query. This returned upcoming Premier League matches and most recent results, but also returns other tournaments like FA and EFL Cup. Dates were also inconsistent so had to be cleaned and standardised using datetime, timezone and timedelta.
+To get around this I created a list of all Premier League club names, looping through and using the club name as the API search query. This returned upcoming Premier League matches and most recent results, but also returned other tournaments like FA and EFL Cup. Dates were also inconsistent so had to be cleaned and standardised using datetime, timezone and timedelta.
 
 ```
 @router.route("/new/matches/<club_name>", methods=["GET"])
@@ -198,7 +200,7 @@ def create():
 ```
 
 ### Day Three: Backend Controllers
-Once I'd got my head around the public API, I focused on setting up my other routers, including sign up, log in, posting a prediction and getting all user predictions. 
+Once I'd got my head around the public API, I focused on setting up my other routers, including sign up, login, posting a prediction and getting all user predictions. 
 
 I used the @password.setter decorator in the UserModel and the password function which takes the plain text password, and generates a hashed version using the generate_password_hash function provided by the bcrypt library. 
 
@@ -211,7 +213,7 @@ I used the @password.setter decorator in the UserModel and the password function
 
 I made the password_hash, email and password load_only in the UserSerializer for privacy reasons.
 
-For log in, the validate_password function in the user model checks the login_password against the password_has using the bcrypt library:
+For login, the validate_password function in the user model checks the login_password against the password_has using the bcrypt library:
 
 ```
 def validate_password(self, login_password):
