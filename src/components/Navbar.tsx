@@ -3,7 +3,7 @@ import React from "react";
 import soccer_ball from "../../assets/soccer-ball.png";
 
 function Navbar({ user, setUser }: any) {
-  const [menuDisplayed, setMenuDisplayed] = React.useState(false);
+  const [menuDisplayedMobile, setMenuDisplayedMobile] = React.useState(false);
   const navigate = useNavigate();
 
   function logout() {
@@ -12,11 +12,16 @@ function Navbar({ user, setUser }: any) {
     navigate("/");
   }
 
+  // if the app is on full screen, then the menu should always be shown
+  // if the app is on mobile, the menu should be hidden to begin with
+  // if the app is on mobile, and the hamburger icon is clicked, then the menu should be unhidden if it is hidden..
+  // .. hidden if it is unhidden
+
   function hamburgerMenu() {
-    if (!menuDisplayed && window.innerWidth < 1024) {
-      setMenuDisplayed(true);
-    } else if (menuDisplayed && window.innerWidth < 1024) {
-      setMenuDisplayed(false);
+    if (!menuDisplayedMobile && window.innerWidth < 1024) {
+      setMenuDisplayedMobile(true);
+    } else if (menuDisplayedMobile && window.innerWidth < 1024) {
+      setMenuDisplayedMobile(false);
     }
   }
 
@@ -61,7 +66,7 @@ function Navbar({ user, setUser }: any) {
               to="/"
               className={
                 "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                (!menuDisplayed && "hidden")
+                (window.innerWidth < 1024 && !menuDisplayedMobile && "hidden")
               }
             >
               Home
@@ -71,7 +76,7 @@ function Navbar({ user, setUser }: any) {
                 to="/predictions"
                 className={
                   "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayed && "hidden")
+                  (!menuDisplayedMobile && "hidden")
                 }
               >
                 Predictions
@@ -82,7 +87,7 @@ function Navbar({ user, setUser }: any) {
                 to="/results"
                 className={
                   "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayed && "hidden")
+                  (!menuDisplayedMobile && "hidden")
                 }
               >
                 Results
@@ -93,7 +98,7 @@ function Navbar({ user, setUser }: any) {
                 to="/leaderboard"
                 className={
                   "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayed && "hidden")
+                  (!menuDisplayedMobile && "hidden")
                 }
               >
                 Leaderboard
@@ -104,7 +109,7 @@ function Navbar({ user, setUser }: any) {
                 to="/matches"
                 className={
                   "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayed && "hidden")
+                  (!menuDisplayedMobile && "hidden")
                 }
               >
                 Post A Match
@@ -115,7 +120,7 @@ function Navbar({ user, setUser }: any) {
                 to="/scoreupdate"
                 className={
                   "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayed && "hidden")
+                  (!menuDisplayedMobile && "hidden")
                 }
               >
                 Update A Score
@@ -128,7 +133,7 @@ function Navbar({ user, setUser }: any) {
                 to="/signin"
                 className={
                   "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-orange-600 hover:bg-white mt-4 lg:mt-0 " +
-                  (!menuDisplayed && "hidden")
+                  (window.innerWidth < 1024 && !menuDisplayedMobile && "hidden")
                 }
               >
                 Members Area
@@ -139,8 +144,8 @@ function Navbar({ user, setUser }: any) {
                 to="/signin"
                 onClick={logout}
                 className={
-                  "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-amber-500 hover:bg-white mt-4 lg:mt-0 hover:border-amber-500 " +
-                  (!menuDisplayed && "hidden")
+                  "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-amber-500 hover:bg-white mt-4 lg:mt-0 hover:border-amber-500 "
+                  // (menuDisplayed && "hidden")
                 }
               >
                 Sign Out

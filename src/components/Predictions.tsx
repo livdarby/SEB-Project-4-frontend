@@ -12,6 +12,8 @@ function Predictions({ user }: any) {
   >(null);
   const [areDatabaseMatchesFetched, setAreDatabaseMatchesFetched] =
     React.useState(false);
+  const [selectedMatchWeek, setSelectedMatchWeek] = React.useState<any>(null);
+  console.log(selectedMatchWeek, databaseMatches);
 
   const todaysDate = new Date();
   const nextSunday = getNextSunday(todaysDate);
@@ -68,17 +70,21 @@ function Predictions({ user }: any) {
   //   fetchMatches()
   // }, []);
 
-  async function getDabaseMatches() {
+  async function getDabaseMatches(selectedMatchWeek: Number) {
     const resp = await fetch(`${baseUrl}/matches`);
     const data = await resp.json();
-    // console.log(data);
-    const filtered_db_data = data.filter((match: any) => {
-      return (
-        new Date(match.match_date) > new Date("Mon, 22 Apr 2024") &&
-        new Date(match.match_date) < new Date("Fri, 26 Apr 2024")
-      );
-    });
-    setDatabaseMatches(filtered_db_data);
+    const filteredData = data.filter(
+      (match: any) => match.match_week === selectedMatchWeek
+    );
+    console.log(selectedMatchWeek, filteredData);
+    setDatabaseMatches(data);
+    // const filtered_db_data = data.filter((match: any) => {
+    //   return (
+    //     new Date(match.match_date) > new Date("Mon, 6 May 2024") &&
+    //     new Date(match.match_date) < new Date("Mon, 13 May 2024")
+    //   );
+    // });
+    // setDatabaseMatches(filtered_db_data);
   }
 
   function getNextSunday(date: any) {
@@ -101,6 +107,12 @@ function Predictions({ user }: any) {
     return matchDate > lastSunday && matchDate <= nextSunday;
   }
 
+  function handleMatchWeekClick(e: any) {
+    setSelectedMatchWeek(Number(e.target.value));
+    setDatabaseMatches(null);
+    getDabaseMatches(selectedMatchWeek);
+  }
+
   if (matches && !areMatchesPosted) {
     async function postMatches() {
       const resp = await axios.post(`${baseUrl}/matches`, matches);
@@ -110,21 +122,71 @@ function Predictions({ user }: any) {
   }
 
   if (/*areMatchesPosted  &&*/ !areDatabaseMatchesFetched) {
-    getDabaseMatches();
+    getDabaseMatches(selectedMatchWeek);
     setAreDatabaseMatchesFetched(true);
   }
 
   return (
-    <section className="flex justify-center text-center bg-[#d3ecfb]">
+    <section className={"flex h-full justify-center text-center bg-[#d3ecfb] "}>
       <div className="w-full mx-auto">
         <h1 className="text-3xl tracking-wide my-10 font-marker tracking-widest text-[#1884ef]">
           PREDICTIONS
         </h1>
+        <label className="uppercase text-gray-800 text-s font-semibold tracking-wide">
+          Select Match Week:
+        </label>
+        <br />
+        <select
+          onChange={handleMatchWeekClick}
+          className="my-5"
+          name="match-week"
+          id="match-week"
+        >
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+          <option value="32">32</option>
+          <option value="33">33</option>
+          <option value="34">34</option>
+          <option value="35">35</option>
+          <option value="36">36</option>
+          <option value="37">37</option>
+          <option value="38">38</option>
+        </select>
+
         <div className="flex justify-center flex-wrap grid-cols-2 w-full">
           {!databaseMatches && <p className="h-screen">Loading...</p>}
           {databaseMatches
             ?.filter((match: any) => {
-              return !match.match_date.includes("Mar") && match.id !== 1;
+              return match.match_week === selectedMatchWeek;
             })
             .map((databaseMatch: IDatabaseMatch) => {
               return (
@@ -136,6 +198,14 @@ function Predictions({ user }: any) {
               );
             })}
         </div>
+        {databaseMatches?.filter((match: any) => {
+          return match.match_week === selectedMatchWeek;
+        }).length === 0 && (
+          <p className="h-screen uppercase text-gray-800 tracking-wide font-semibold text-xs my-5">
+            No matches returned for this Match Week. Please select a different
+            Match Week to continue.
+          </p>
+        )}
       </div>
     </section>
   );
