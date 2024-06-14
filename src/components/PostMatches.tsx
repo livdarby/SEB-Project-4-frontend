@@ -7,6 +7,8 @@ function PostMatches({ user }: any) {
     team_one_name: "",
     team_two_name: "",
     match_date: "",
+    match_week: "",
+    tournament: ""
   });
   const [errorData, setErrorData] = React.useState<any>(null);
   const [disabled, setDisabled] = React.useState(true);
@@ -16,7 +18,8 @@ function PostMatches({ user }: any) {
     if (
       matchData.team_one_name &&
       matchData.team_two_name &&
-      matchData.match_date
+      matchData.match_date &&
+      matchData.match_week && matchData.tournament
     ) {
       setDisabled(false);
     } else {
@@ -32,6 +35,14 @@ function PostMatches({ user }: any) {
       checkAllFieldsAreTruthy(matchDataCopy);
     } else if (e.target.id === "team_two_name") {
       matchDataCopy.team_two_name = e.target.value;
+      setMatchData(matchDataCopy);
+      checkAllFieldsAreTruthy(matchDataCopy);
+    } else if (e.target.id === "match_week") {
+      matchDataCopy.match_week = e.target.value;
+      setMatchData(matchDataCopy);
+      checkAllFieldsAreTruthy(matchDataCopy);
+    } else if (e.target.id === "tournament") {
+      matchDataCopy.tournament = e.target.value;
       setMatchData(matchDataCopy);
       checkAllFieldsAreTruthy(matchDataCopy);
     } else {
@@ -54,6 +65,8 @@ function PostMatches({ user }: any) {
         team_one_name: "",
         team_two_name: "",
         match_date: "",
+        match_week: "",
+        tournament: ""
       });
       setDisabled(true);
     } catch (e: any) {
@@ -67,6 +80,17 @@ function PostMatches({ user }: any) {
       <div className="h-screen flex flex-col justify-center">
         <form className="flex flex-col items-center bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-10 border-solid border-2 border-amber-500">
           <label className="uppercase text-center text-gray-700 text-sm font-bold mb-2">
+            Tournament
+          </label>
+          <input
+            className="text-center shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            placeholder="Euros or Premier League"
+            onChange={handleChange}
+            id={"tournament"}
+            value={matchData.tournament}
+          />
+          <label className="uppercase text-center text-gray-700 text-sm font-bold mb-2">
             Team One Name
           </label>
           <input
@@ -75,7 +99,7 @@ function PostMatches({ user }: any) {
             placeholder="Name"
             onChange={handleChange}
             id={"team_one_name"}
-            value = {matchData.team_one_name}
+            value={matchData.team_one_name}
           />
           <label className="uppercase text-center text-gray-700 text-sm font-bold mb-2">
             Team Two Name
@@ -86,7 +110,18 @@ function PostMatches({ user }: any) {
             placeholder="Name"
             onChange={handleChange}
             id={"team_two_name"}
-            value = {matchData.team_two_name}
+            value={matchData.team_two_name}
+          />
+          <label className="uppercase text-center text-gray-700 text-sm font-bold mb-2">
+            Match Week
+          </label>
+          <input
+            className="text-center shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            placeholder="Week"
+            onChange={handleChange}
+            id={"match_week"}
+            value={matchData.match_week}
           />
           <label className="uppercase text-center text-gray-700 text-sm font-bold mb-2">
             Match Date
@@ -96,7 +131,7 @@ function PostMatches({ user }: any) {
             type="datetime-local"
             onChange={handleChange}
             id={"match_date"}
-            value = {matchData.match_date}
+            value={matchData.match_date}
           />
           <button
             onClick={handleSubmit}

@@ -79,7 +79,18 @@ function Navbar({ user, setUser }: any) {
                   (!menuDisplayedMobile && "hidden")
                 }
               >
-                Predictions
+                Premier League
+              </Link>
+            )}
+            {user && user.id !== 1 && (
+              <Link
+                to="/euros"
+                className={
+                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
+                  (!menuDisplayedMobile && "hidden")
+                }
+              >
+                Euros
               </Link>
             )}
             {user && user.id !== 1 && (
