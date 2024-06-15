@@ -13,7 +13,6 @@ function Predictions({ user }: any) {
   const [areDatabaseMatchesFetched, setAreDatabaseMatchesFetched] =
     React.useState(false);
   const [selectedMatchWeek, setSelectedMatchWeek] = React.useState<any>(null);
-  console.log(selectedMatchWeek, databaseMatches);
 
   const todaysDate = new Date();
   const nextSunday = getNextSunday(todaysDate);
@@ -127,8 +126,16 @@ function Predictions({ user }: any) {
   }
 
   return (
-    <section className={"flex h-full justify-center text-center bg-[#d3ecfb] "}>
-      <div className="w-full mx-auto">
+    <section
+      className={"flex h-screen flex-col justify-center bg-[#d3ecfb] flex-wrap"}
+    >
+      <h1 className="font-marker text-center text-3xl text-[#1884ef] mb-2">
+        Premier League Predictions League
+      </h1>
+      <p className="text-center tracking-wide font-title">
+        returns in September. Check back soon!
+      </p>
+      {/* <div className="w-full mx-auto">
         <h1 className="text-3xl tracking-wide my-10 font-marker tracking-widest text-[#1884ef]">
           PREDICTIONS
         </h1>
@@ -206,7 +213,7 @@ function Predictions({ user }: any) {
             Match Week to continue.
           </p>
         )}
-      </div>
+      </div> */}
     </section>
   );
 }

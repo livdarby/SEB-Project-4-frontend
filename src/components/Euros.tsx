@@ -4,7 +4,7 @@ import EuroMatchCard from "./EuroMatchCard";
 
 function Euros({ user }: any) {
   const [matches, setMatches] = useState<any>(null);
-  console.log(matches);
+  // console.log(matches);
 
   async function getMatches() {
     const resp = await fetch(`${baseUrl}/matches`);
@@ -13,13 +13,24 @@ function Euros({ user }: any) {
       return match.tournament === "Euros";
     });
 
-    filteredData.map((match: any) => {
+    const arrayWithTimeObject = filteredData.map((match: any) => {
+      return { ...match, ...{ dateObject: new Date(match.match_date) } };
+    });
+    const upcomingMatches = arrayWithTimeObject.filter((match: any) => {
+      return (
+        match.dateObject >= new Date() ||
+        (match.dateObject.getDate() === new Date().getDate() &&
+          match.dateObject.getMonth() === new Date().getMonth())
+      );
+    });
+
+    upcomingMatches.map((match: any) => {
       return (match.match_date = new Date(match.match_date));
     });
-    filteredData.sort(
+    upcomingMatches.sort(
       (a: any, b: any) => a.match_date.getTime() - b.match_date.getTime()
     );
-    setMatches(filteredData);
+    setMatches(upcomingMatches);
   }
 
   useEffect(() => {

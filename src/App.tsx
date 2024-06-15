@@ -13,6 +13,7 @@ import { baseUrl } from "./config";
 import PostMatches from "./components/PostMatches";
 import ScoreUpdate from "./components/ScoreUpdate";
 import Euros from "./components/Euros";
+import EuroResults from "./components/EuroResults";
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -40,6 +41,7 @@ function App() {
           <Route path="/" element={<Home user={user} />} />
           <Route path="/predictions" element={<Predictions user={user} />} />
           <Route path="/euros" element = {<Euros user={user}/>}/>
+          <Route path="/eurosresults" element = {<EuroResults user={user}/>}/>
           <Route path="/results" element={<Results user={user} />} />
           <Route path="/leaderboard" element={<Leaderboard user={user} />} />
           <Route path="/signin" element={<SignIn fetchUser={fetchUser} />} />

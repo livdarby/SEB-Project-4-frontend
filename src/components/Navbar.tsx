@@ -95,6 +95,17 @@ function Navbar({ user, setUser }: any) {
             )}
             {user && user.id !== 1 && (
               <Link
+                to="/eurosresults"
+                className={
+                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
+                  (!menuDisplayedMobile && "hidden")
+                }
+              >
+                Euros Results
+              </Link>
+            )}
+            {/* {user && user.id !== 1 && (
+              <Link
                 to="/results"
                 className={
                   "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
@@ -103,7 +114,7 @@ function Navbar({ user, setUser }: any) {
               >
                 Results
               </Link>
-            )}
+            )} */}
             {user && user.id !== 1 && (
               <Link
                 to="/leaderboard"
