@@ -126,10 +126,8 @@ function Predictions({ user }: any) {
   }
 
   return (
-    <section
-      className={"flex h-screen flex-col justify-center bg-[#d3ecfb] flex-wrap"}
-    >
-      <h1 className="font-marker text-center text-3xl text-[#1884ef] mb-2">
+    <section className={"min-h-svh flex flex-col bg-[#d3ecfb] items-center"}>
+      <h1 className="mt-10 max-w-[90%] font-marker text-center text-3xl text-[#1884ef] mb-2">
         Premier League Predictions League
       </h1>
       <p className="text-center tracking-wide font-title">

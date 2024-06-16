@@ -14,6 +14,7 @@ import PostMatches from "./components/PostMatches";
 import ScoreUpdate from "./components/ScoreUpdate";
 import Euros from "./components/Euros";
 import EuroResults from "./components/EuroResults";
+import EditPrediction from "./components/EditPrediction";
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -48,6 +49,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/matches" element={<PostMatches user={user} />} />
           <Route path="/scoreupdate" element={<ScoreUpdate user={user} />} />
+          <Route path="/editprediction" element={<EditPrediction user={user} />} />
         </Routes>
       </Router>
     </>

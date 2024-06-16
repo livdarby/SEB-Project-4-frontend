@@ -12,7 +12,7 @@ function SignUp() {
     username: "",
     email: "",
     password: "",
-    invite_code: "",
+    // invite_code: "",
   });
 
   const [errorMessage, setErrorMessage] = React.useState("");
@@ -28,14 +28,13 @@ function SignUp() {
     if (
       newFormData.email ||
       newFormData.username ||
-      newFormData.password ||
-      newFormData.invite_code
+      newFormData.password
     ) {
       setDataInputted(true);
     } else {
-      setDataInputted(false)
+      setDataInputted(false);
     }
-    setErrorMessage("")
+    setErrorMessage("");
   }
 
   async function handleSubmit(e: SyntheticEvent) {
@@ -96,7 +95,7 @@ function SignUp() {
 
           <div className="mb-3">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Password
+              Password <span className="text-xs italic">(min. 6 characters)</span>
             </label>
             <input
               className={
@@ -115,7 +114,7 @@ function SignUp() {
               </p>
             )}
           </div>
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               League Invite Code
             </label>
@@ -135,12 +134,12 @@ function SignUp() {
                 Please input all fields.
               </p>
             )}
-            {errorMessage && (
-              <p className="uppercase text-orange-700 tracking-wide text-xs font-bold mb-2">
-                Unsuccessful, Please try again.
-              </p>
-            )}
-          </div>
+          </div> */}
+          {errorMessage && (
+            <p className="uppercase text-orange-700 tracking-wide text-xs font-bold mb-2">
+              Unsuccessful, Please try again.
+            </p>
+          )}
           <div className="flex items-center justify-between">
             <button
               onClick={handleSubmit}

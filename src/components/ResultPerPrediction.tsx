@@ -47,7 +47,7 @@ function ResultPerPrediction({
   }, []);
 
   return (
-    <div className="my-5 border flex justify-center flex-wrap max-w-[50%] mx-auto py-2 rounded shadow">
+    <div className="my-5 border flex justify-center flex-wrap max-w-[90%] md:max-w-[50%] mx-auto py-2 rounded shadow">
         <p className="text-xs font-semibold text-gray-700 mb-2">{match.match_date}</p>
       <h1 className="w-[100%] text-center uppercase text-sm font-semibold text-gray-700 mb-2">
         Match Result

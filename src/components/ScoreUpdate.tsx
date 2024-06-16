@@ -11,13 +11,14 @@ function ScoreUpdate({ user }: any) {
   });
   const [matchFound, setMatchFound] = useState(false);
   const token = localStorage.getItem("token");
-  console.log(formData);
-  console.log(matchFound);
+  const [errorMessage, setErrorMessage] = useState<any>(false);
 
   function handleChange(e: any) {
     const formDataCopy = structuredClone(formData);
     formDataCopy[e.target.name] = e.target.value;
     setFormData(formDataCopy);
+    // setMatchFound(false);
+    setErrorMessage(false);
   }
 
   async function handleSubmit(e: any) {
@@ -25,6 +26,13 @@ function ScoreUpdate({ user }: any) {
       e.preventDefault();
       await axios.put(`${baseUrl}/scores`, formData, {
         headers: { Authorization: `Bearer ${token}` },
+      });
+      setMatchFound(false);
+      setFormData({
+        team_one_name: "",
+        team_two_name: "",
+        team_one_score: "",
+        team_two_score: "",
       });
     } catch (error: any) {
       if (error.response.status === 500) {
@@ -34,13 +42,14 @@ function ScoreUpdate({ user }: any) {
         console.log(
           "Match not found in the database. Check your input fields or post the match first."
         );
+        setErrorMessage(true);
       }
     }
   }
 
   return (
     <>
-      <div className="h-screen flex flex-col justify-center">
+      <div className="h-screen flex flex-col md:justify-center mt-10 sm:mt-0">
         <form className="flex flex-col items-center bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-10 border-solid border-2 border-amber-500">
           <label
             className="uppercase text-center text-gray-700 text-sm font-bold mb-2"
@@ -111,6 +120,11 @@ function ScoreUpdate({ user }: any) {
           >
             Next
           </button>
+          {errorMessage && (
+            <p className="text-center uppercase text-xs font-semibold text-red-500">
+              Match not found in the database. Please try again.
+            </p>
+          )}
         </form>
       </div>
     </>

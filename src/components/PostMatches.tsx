@@ -77,7 +77,7 @@ function PostMatches({ user }: any) {
 
   return (
     <>
-      <div className="h-screen flex flex-col justify-center">
+      <div className="h-screen flex flex-col md:justify-center mt-6 sm:mt-0">
         <form className="flex flex-col items-center bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-10 border-solid border-2 border-amber-500">
           <label className="uppercase text-center text-gray-700 text-sm font-bold mb-2">
             Tournament

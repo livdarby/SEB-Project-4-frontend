@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import soccer_ball from "../../assets/soccer-ball.png";
 
 function Navbar({ user, setUser }: any) {
@@ -17,13 +17,33 @@ function Navbar({ user, setUser }: any) {
   // if the app is on mobile, and the hamburger icon is clicked, then the menu should be unhidden if it is hidden..
   // .. hidden if it is unhidden
 
-  function hamburgerMenu() {
-    if (!menuDisplayedMobile && window.innerWidth < 1024) {
-      setMenuDisplayedMobile(true);
-    } else if (menuDisplayedMobile && window.innerWidth < 1024) {
+  function toggleHamburgerMenu() {
+    setMenuDisplayedMobile((prevState) => !prevState);
+  }
+
+  function handleLinkClick() {
+    if (menuDisplayedMobile && window.innerWidth < 1024) {
       setMenuDisplayedMobile(false);
     }
   }
+
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 1024) {
+        setMenuDisplayedMobile(false);
+      }
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // function hamburgerMenu() {
+  //   if (!menuDisplayedMobile && window.innerWidth < 1024) {
+  //     setMenuDisplayedMobile(true);
+  //   } else if (menuDisplayedMobile && window.innerWidth < 1024) {
+  //     setMenuDisplayedMobile(false);
+  //   }
+  // }
 
   return (
     <>
@@ -34,20 +54,15 @@ function Navbar({ user, setUser }: any) {
             className="fill-current"
             height="60"
             width="60"
+            alt="Soccer Ball"
           />
-          <svg
-            className="fill-current h-8 w-8 mr-2"
-            width="54"
-            height="54"
-            viewBox="0 0 54 54"
-          ></svg>
           <span className="font-marker font-semibold text-2xl tracking-widest">
             <Link to="/">Premier Picks</Link>
           </span>
         </div>
         <div className="block lg:hidden">
           <button
-            onClick={hamburgerMenu}
+            onClick={toggleHamburgerMenu}
             className="flex items-center px-3 py-2 border rounded border-gray-700 bg-[#d3ecfb] hover:text-white hover:bg-[#69c0f0] hover:border-white"
           >
             <svg
@@ -60,90 +75,78 @@ function Navbar({ user, setUser }: any) {
             </svg>
           </button>
         </div>
-        <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div
+          className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto ${
+            menuDisplayedMobile ? "block" : "hidden"
+          } lg:block`}
+        >
           <div className="text-sm lg:flex-grow">
             <Link
+              onClick={handleLinkClick}
               to="/"
-              className={
-                "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                (window.innerWidth < 1024 && !menuDisplayedMobile && "hidden")
-              }
+              className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
             >
               Home
             </Link>
             {user && user.id !== 1 && (
               <Link
+                onClick={handleLinkClick}
                 to="/predictions"
-                className={
-                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayedMobile && "hidden")
-                }
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
               >
                 Premier League
               </Link>
             )}
             {user && user.id !== 1 && (
               <Link
+                onClick={handleLinkClick}
                 to="/euros"
-                className={
-                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayedMobile && "hidden")
-                }
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
               >
                 Euros
               </Link>
             )}
             {user && user.id !== 1 && (
               <Link
+                onClick={handleLinkClick}
                 to="/eurosresults"
-                className={
-                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayedMobile && "hidden")
-                }
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
               >
                 Euros Results
               </Link>
             )}
-            {/* {user && user.id !== 1 && (
-              <Link
-                to="/results"
-                className={
-                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayedMobile && "hidden")
-                }
-              >
-                Results
-              </Link>
-            )} */}
             {user && user.id !== 1 && (
               <Link
+                onClick={handleLinkClick}
                 to="/leaderboard"
-                className={
-                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayedMobile && "hidden")
-                }
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
               >
                 Leaderboard
               </Link>
             )}
             {user && user.id === 1 && (
               <Link
+                onClick={handleLinkClick}
                 to="/matches"
-                className={
-                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayedMobile && "hidden")
-                }
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
               >
                 Post A Match
               </Link>
             )}
             {user && user.id === 1 && (
               <Link
+                onClick={handleLinkClick}
+                to="/editprediction"
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+              >
+                Edit A Prediction
+              </Link>
+            )}
+            {user && user.id === 1 && (
+              <Link
+                onClick={handleLinkClick}
                 to="/scoreupdate"
-                className={
-                  "block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 " +
-                  (!menuDisplayedMobile && "hidden")
-                }
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
               >
                 Update A Score
               </Link>
@@ -152,11 +155,9 @@ function Navbar({ user, setUser }: any) {
           <div>
             {!user && (
               <Link
+                onClick={handleLinkClick}
                 to="/signin"
-                className={
-                  "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-orange-600 hover:bg-white mt-4 lg:mt-0 " +
-                  (window.innerWidth < 1024 && !menuDisplayedMobile && "hidden")
-                }
+                className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-orange-600 hover:bg-white mt-4 lg:mt-0"
               >
                 Members Area
               </Link>
@@ -164,11 +165,11 @@ function Navbar({ user, setUser }: any) {
             {user && (
               <Link
                 to="/signin"
-                onClick={logout}
-                className={
-                  "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-amber-500 hover:bg-white mt-4 lg:mt-0 hover:border-amber-500 "
-                  // (menuDisplayed && "hidden")
-                }
+                onClick={() => {
+                  logout();
+                  handleLinkClick();
+                }}
+                className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-amber-500 hover:bg-white mt-4 lg:mt-0 hover:border-amber-500"
               >
                 Sign Out
               </Link>
