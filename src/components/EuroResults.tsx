@@ -21,10 +21,13 @@ function EuroResults({ user }: any) {
           prediction.match.team_one_score && prediction.match.team_two_score
         );
       });
-    setUserPredictions(euroPredictions);
-    // These are predictions where the matches scores have been submitted
+    const sortedByDate = euroPredictions.sort(
+      (a: any, b: any) =>
+        new Date(a.match.match_date).getTime() -
+        new Date(b.match.match_date).getTime()
+    );
+    setUserPredictions(sortedByDate);
   }
-
 
   useEffect(() => {
     if (user) {

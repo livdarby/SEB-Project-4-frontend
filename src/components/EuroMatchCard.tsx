@@ -105,6 +105,7 @@ function EuroMatchCard({
     }
     setButtonDisabled(true);
     setInputsDisabled(true);
+    setEditButtonDisabled(false);
     setSelectedEditButton(false);
     getPredictionsByUser(id);
   }
