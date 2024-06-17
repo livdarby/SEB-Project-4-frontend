@@ -19,7 +19,7 @@ import EditPrediction from "./components/EditPrediction";
 function App() {
   const [user, setUser] = React.useState(null);
 
-  console.log("Current user: ", user);
+  // console.log("Current user: ", user);
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");

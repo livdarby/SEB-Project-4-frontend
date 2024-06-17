@@ -3,7 +3,6 @@ import { baseUrl } from "../config";
 import ResultPerPrediction from "./ResultPerPrediction";
 
 function EuroResults({ user }: any) {
-  const [matches, setMatches] = useState<any>(null);
   const [userPredictions, setUserPredictions] = useState<any>(null);
   const token = localStorage.getItem("token");
 
@@ -12,15 +11,13 @@ function EuroResults({ user }: any) {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await resp.json();
-    const euroPredictions = data
-      .filter((prediction: any) => {
-        return prediction.match.tournament === "Euros";
-      })
-      .filter((prediction: any) => {
-        return (
-          prediction.match.team_one_score && prediction.match.team_two_score
-        );
-      });
+    const euroPredictions = data.filter((prediction: any) => {
+      return (
+        prediction.match.tournament === "Euros" &&
+       typeof(prediction.match.team_one_score) === 'number' &&
+        typeof(prediction.match.team_two_score) === 'number'
+      );
+    });
     const sortedByDate = euroPredictions.sort(
       (a: any, b: any) =>
         new Date(a.match.match_date).getTime() -

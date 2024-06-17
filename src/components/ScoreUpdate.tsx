@@ -36,12 +36,12 @@ function ScoreUpdate({ user }: any) {
       });
     } catch (error: any) {
       if (error.response.status === 500) {
-        console.log("Match found but scores needed! Proceed.");
+        // console.log("Match found but scores needed! Proceed.");
         setMatchFound(true);
       } else if (error.response.status === 404) {
-        console.log(
-          "Match not found in the database. Check your input fields or post the match first."
-        );
+        // console.log(
+        //   "Match not found in the database. Check your input fields or post the match first."
+        // );
         setErrorMessage(true);
       }
     }

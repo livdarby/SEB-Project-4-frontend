@@ -18,7 +18,7 @@ function SignUp() {
   const [errorMessage, setErrorMessage] = React.useState("");
 
   // console.log(formData);
-  console.log(errorMessage);
+  // console.log(errorMessage);
 
   function handleChange(e: any) {
     const fieldName = e.target.name;

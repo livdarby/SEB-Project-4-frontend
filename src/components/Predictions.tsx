@@ -75,7 +75,7 @@ function Predictions({ user }: any) {
     const filteredData = data.filter(
       (match: any) => match.match_week === selectedMatchWeek
     );
-    console.log(selectedMatchWeek, filteredData);
+    // console.log(selectedMatchWeek, filteredData);
     setDatabaseMatches(data);
     // const filtered_db_data = data.filter((match: any) => {
     //   return (

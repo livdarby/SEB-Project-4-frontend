@@ -12,7 +12,7 @@ function PostMatches({ user }: any) {
   });
   const [errorData, setErrorData] = React.useState<any>(null);
   const [disabled, setDisabled] = React.useState(true);
-  console.log(matchData);
+  // console.log(matchData);
 
   function checkAllFieldsAreTruthy(matchData: any) {
     if (
@@ -55,7 +55,7 @@ function PostMatches({ user }: any) {
   async function handleSubmit(e: any) {
     setErrorData(null);
     e.preventDefault();
-    console.log(matchData);
+    // console.log(matchData);
     const token = localStorage.getItem("token");
     try {
       await axios.post(`${baseUrl}/matches`, matchData, {
@@ -70,7 +70,7 @@ function PostMatches({ user }: any) {
       });
       setDisabled(true);
     } catch (e: any) {
-      console.log(e.response.data);
+      // console.log(e.response.data);
       setErrorData(e.response.data);
     }
   }

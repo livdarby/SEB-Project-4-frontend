@@ -34,7 +34,7 @@ function MatchCard({
   });
   const [matchHasOccurred, setMatchHasOccurred] = React.useState(false);
   const [selectedEdit, setSelectedEdit] = React.useState(false);
-  console.log(matchHasOccurred);
+  // console.log(matchHasOccurred);
 
   React.useEffect(() => {
     async function getMatchById() {
