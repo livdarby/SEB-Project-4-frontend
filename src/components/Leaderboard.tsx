@@ -4,6 +4,7 @@ import UserCard from "./UserCard";
 
 function Leaderboard({ user }: any) {
   const [userScores, setUserScores] = useState<any>([]);
+  // console.log(userScores)
   const token = localStorage.getItem("token");
 
   async function getUserScores() {
@@ -29,8 +30,11 @@ function Leaderboard({ user }: any) {
           <p className="w-[50%] text-center uppercase text-sm font-semibold text-gray-700 border-r">
             Username
           </p>
-          <p className="w-[50%] text-center uppercase text-sm font-semibold text-gray-700">
+          <p className="w-[50%] border-r text-center uppercase text-sm font-semibold text-gray-700">
             Total Score
+          </p>
+          <p className="w-[50%] text-center uppercase text-sm font-semibold text-gray-700">
+            Correct Result
           </p>
         </div>
         {userScores &&
