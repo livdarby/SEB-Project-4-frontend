@@ -34,7 +34,7 @@ function Leaderboard({ user }: any) {
             Total Score
           </p>
           <p className="w-[50%] text-center uppercase text-sm font-semibold text-gray-700">
-            Correct Result
+            Number of Predictions
           </p>
         </div>
         {userScores &&
