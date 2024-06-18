@@ -71,7 +71,7 @@ function SignIn({ fetchUser }: any) {
             />
             {!dataInputted && (
               <p className="text-amber-600 text-xs italic">
-                Please enter username and password.
+                Please enter email and password.
               </p>
             )}
           </div>
@@ -92,7 +92,7 @@ function SignIn({ fetchUser }: any) {
             />
             {!dataInputted && (
               <p className="text-amber-600 text-xs italic">
-                Please enter username and password.
+                Please enter email and password.
               </p>
             )}
           </div>
