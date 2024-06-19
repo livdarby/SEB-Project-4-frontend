@@ -27,25 +27,58 @@ function EuroMatchCard({
   const [inputsDisabled, setInputsDisabled] = useState(false);
   const [editButtonDisabled, setEditButtonDisabled] = useState(false);
   const [selectedEditButton, setSelectedEditButton] = useState(false);
-  const [matchModel, setMatchModel] = useState(null);
+  const [match, setMatch] = useState(null);
   const [userPredictions, setUserPredictions] = useState<any>(null);
   const token = localStorage.getItem("token");
-  const [localDate, setLocalDate] = useState<any>(null);
-  // console.log(new Date(dateObject.getTime() - dateObject.getTimezoneOffset() * 60000));
-  // console.log(
-  //   `user predictions for ${team_one_name} v ${team_two_name}: `,
-  //   userPredictions
-  // );
+  const [localKickOff, setLocalKickOff] = useState<any>(null);
+  const [matchHasStarted, setMatchHasStarted] = useState<any>(false);
 
-  function convertToLocalTime(date: any) {
-    // Option 1: Using toLocaleString
-    // const localDate = new Date(date.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+  useEffect(() => {
+    // first, we fetch the match object, including all required data fields and upate the match state.
+    async function getMatchId() {
+      const resp = await fetch(`${baseUrl}/match/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await resp.json();
+      setMatch(data);
+    }
+    // the function is called
+    getMatchId();
+    // next we get the predictions by user, to check if the user already has a prediction for the match.
+    getPredictionsByUser(id);
+    // next, we need to check whether the match has started. If it has, we lock the submit & edit buttons, and input fields.
+  }, []);
 
-    // Option 2: Adjusting the Time Zone Offset Manually
-    const convertedToLocalTime = new Date(
-      date.getTime() - date.getTimezoneOffset() * 60000
+  useEffect(() => {
+    hasMatchStarted();
+  }, [userPredictions]);
+
+  // This is the function to check whether the match has started.
+  function hasMatchStarted() {
+    // The match has a match date field. E.g. "Wed, 19 Jun 2024 17:00:00"
+    // This is a STRING
+    // We need to convert this to the users local timezone and compare it against the current time in their location
+    const kickOffInLocalTimeZone = new Date(
+      match_date.getTime() - match_date.getTimezoneOffset() * 60000
     );
-    setLocalDate(convertedToLocalTime);
+    setLocalKickOff(kickOffInLocalTimeZone);
+    // we have updated the state for the kick off in the local timezone
+    // now we have to compare this to the current time in the local timezone
+    // if the kick off > the time now IE THE MATCH IS IN THE FUTURE, edit, submit and input should NOT be disabled
+    if (kickOffInLocalTimeZone > new Date()) {
+      setInputsDisabled(false);
+      (userPredictions?.length > 0)
+        ? (setEditButtonDisabled(false), setInputsDisabled(true))
+        : setEditButtonDisabled(true);
+      // console.log("match hasn't started", team_one_name, userPredictions, editButtonDisabled);
+      setMatchHasStarted(false);
+    } else {
+      setInputsDisabled(true);
+      setEditButtonDisabled(true);
+      setButtonDisabled(true);
+      setMatchHasStarted(true);
+      // console.log("match has started", team_one_name)
+    }
   }
 
   async function getPredictionsByUser(id: any) {
@@ -56,45 +89,17 @@ function EuroMatchCard({
     const filteredData = data.filter((prediction: any) => {
       return prediction.match.id === id;
     });
-    filteredData.length > 0
-      ? setInputsDisabled(true)
-      : setEditButtonDisabled(true);
-
     setUserPredictions(filteredData);
   }
-
-  useEffect(() => {
-    async function getMatchId() {
-      const resp = await fetch(`${baseUrl}/match/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await resp.json();
-      setMatchModel(data);
-    }
-    getMatchId();
-    getPredictionsByUser(id);
-    setEditButtonDisabled(new Date() > localDate);
-    hasMatchStarted();
-  }, []);
 
   // we have found the predictions by user
   // next, we need to introduce an edit button
   // and disable submit when the match has passed
 
-  function hasMatchStarted() {
-    convertToLocalTime(dateObject);
-    if (localDate < new Date()) {
-      // console.log(`${team_one_name} v ${team_two_name} match has started`)
-      setInputsDisabled(true);
-      setEditButtonDisabled(true);
-      setButtonDisabled(true);
-    }
-  }
-
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const formDataCopy = structuredClone(formData);
     formDataCopy[e.target.name] = e.target.value;
-    formDataCopy.match = matchModel;
+    formDataCopy.match = match;
     setFormData(formDataCopy);
     formDataCopy.team_one_score && formDataCopy.team_two_score
       ? setButtonDisabled(false)
@@ -136,7 +141,7 @@ function EuroMatchCard({
         <p className="uppercase text-xs font-bold mt-2">
           {match_date.toString()}
         </p>
-        {localDate < new Date() && (
+        {matchHasStarted && (
           <p className="uppercase text-xs font-bold mt-2 text-red-500">
             Match has started - predictions now locked in.
           </p>
