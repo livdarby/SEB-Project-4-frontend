@@ -30,10 +30,23 @@ function EuroMatchCard({
   const [matchModel, setMatchModel] = useState(null);
   const [userPredictions, setUserPredictions] = useState<any>(null);
   const token = localStorage.getItem("token");
+  const [localDate, setLocalDate] = useState<any>(null);
+  // console.log(new Date(dateObject.getTime() - dateObject.getTimezoneOffset() * 60000));
   // console.log(
   //   `user predictions for ${team_one_name} v ${team_two_name}: `,
   //   userPredictions
   // );
+
+  function convertToLocalTime(date: any) {
+    // Option 1: Using toLocaleString
+    // const localDate = new Date(date.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+
+    // Option 2: Adjusting the Time Zone Offset Manually
+    const convertedToLocalTime = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+    setLocalDate(convertedToLocalTime);
+  }
 
   async function getPredictionsByUser(id: any) {
     const resp = await fetch(`${baseUrl}/predictions/${user.id}`, {
@@ -60,7 +73,7 @@ function EuroMatchCard({
     }
     getMatchId();
     getPredictionsByUser(id);
-    setEditButtonDisabled(new Date() > dateObject);
+    setEditButtonDisabled(new Date() > localDate);
     hasMatchStarted();
   }, []);
 
@@ -69,7 +82,8 @@ function EuroMatchCard({
   // and disable submit when the match has passed
 
   function hasMatchStarted() {
-    if (dateObject < new Date()) {
+    convertToLocalTime(dateObject);
+    if (localDate < new Date()) {
       // console.log(`${team_one_name} v ${team_two_name} match has started`)
       setInputsDisabled(true);
       setEditButtonDisabled(true);
@@ -122,7 +136,7 @@ function EuroMatchCard({
         <p className="uppercase text-xs font-bold mt-2">
           {match_date.toString()}
         </p>
-        {dateObject < new Date() && (
+        {localDate < new Date() && (
           <p className="uppercase text-xs font-bold mt-2 text-red-500">
             Match has started - predictions now locked in.
           </p>

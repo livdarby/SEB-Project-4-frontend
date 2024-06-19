@@ -10,7 +10,7 @@ function UserCard({ username, score, scores_list }: any) {
     checkNumberOfPredictions()
   }, []);
 
-  console.log(scores_list);
+  // console.log(scores_list);
   return (
     <>
       <div className="flex justify-center border border-t-0 md:max-w-[50%] max-w-[80%] mx-auto">
