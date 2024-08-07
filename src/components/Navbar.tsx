@@ -151,6 +151,15 @@ function Navbar({ user, setUser }: any) {
                 Update A Score
               </Link>
             )}
+            {user && user.permissions === "admin" && (
+              <Link
+                onClick={handleLinkClick}
+                to="/fplblackbox"
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
+              >
+                FPL Blackbox
+              </Link>
+            )}
           </div>
           <div>
             {!user && (

@@ -15,6 +15,7 @@ import ScoreUpdate from "./components/ScoreUpdate";
 import Euros from "./components/Euros";
 import EuroResults from "./components/EuroResults";
 import EditPrediction from "./components/EditPrediction";
+import FPLBlackBox from "./components/FPLBlackBox";
 
 function App() {
   const [user, setUser] = React.useState(null);
@@ -50,6 +51,7 @@ function App() {
           <Route path="/matches" element={<PostMatches user={user} />} />
           <Route path="/scoreupdate" element={<ScoreUpdate user={user} />} />
           <Route path="/editprediction" element={<EditPrediction user={user} />} />
+          <Route path="/fplblackbox" element={<FPLBlackBox user={user} />} />
         </Routes>
       </Router>
     </>
