@@ -41,9 +41,10 @@ function App() {
         <Navbar user={user} setUser={setUser} />
         <Routes>
           <Route path="/" element={<Home user={user} />} />
-          <Route path="/predictions" element={<Predictions user={user} />} />
-          <Route path="/euros" element = {<Euros user={user}/>}/>
-          <Route path="/eurosresults" element = {<EuroResults user={user}/>}/>
+          <Route path="/premierleague" element={<Euros user={user} league={"premierleague"} />} />
+          <Route path="/euros" element = {<Euros user={user} league={"euros"}/>}/>
+          <Route path="/plresults" element = {<EuroResults user={user} league={"premierleague"}/>}/>
+          <Route path="/eurosresults" element = {<EuroResults user={user} league={"euros"}/>}/>
           <Route path="/results" element={<Results user={user} />} />
           <Route path="/leaderboard" element={<Leaderboard user={user} />} />
           <Route path="/signin" element={<SignIn fetchUser={fetchUser} />} />

@@ -2,15 +2,18 @@ import { baseUrl } from "../config";
 import { useEffect, useState } from "react";
 import EuroMatchCard from "./EuroMatchCard";
 
-function Euros({ user }: any) {
+function Euros({ user, league }: any) {
   const [matches, setMatches] = useState<any>(null);
-  // console.log(matches);
 
   async function getMatches() {
     const resp = await fetch(`${baseUrl}/matches`);
     const data = await resp.json();
     const filteredData = data.filter((match: any) => {
-      return match.tournament === "Euros";
+      if (league === "euros") {
+        return match.tournament === "Euros";
+      } else if (league === "premierleague") {
+        return match.tournament === "Premier League";
+      }
     });
 
     const arrayWithTimeObject = filteredData.map((match: any) => {
@@ -35,7 +38,7 @@ function Euros({ user }: any) {
 
   useEffect(() => {
     getMatches();
-  }, []);
+  }, [league]);
 
   return (
     <>
@@ -45,6 +48,7 @@ function Euros({ user }: any) {
           return <EuroMatchCard key={match.id} {...match} user={user} />;
         })}
       </div>
+      
     </>
   );
 }

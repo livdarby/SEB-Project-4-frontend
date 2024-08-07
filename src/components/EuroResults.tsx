@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { baseUrl } from "../config";
 import ResultPerPrediction from "./ResultPerPrediction";
 
-function EuroResults({ user }: any) {
+function EuroResults({ user, league }: any) {
   const [userPredictions, setUserPredictions] = useState<any>(null);
   const token = localStorage.getItem("token");
 
@@ -12,11 +12,19 @@ function EuroResults({ user }: any) {
     });
     const data = await resp.json();
     const euroPredictions = data.filter((prediction: any) => {
-      return (
-        prediction.match.tournament === "Euros" &&
-       typeof(prediction.match.team_one_score) === 'number' &&
-        typeof(prediction.match.team_two_score) === 'number'
-      );
+      if (league === "Euros") {
+        return (
+          prediction.match.tournament === "Euros" &&
+          typeof prediction.match.team_one_score === "number" &&
+          typeof prediction.match.team_two_score === "number"
+        );
+      } else if (league === "premierleague") {
+        return (
+          prediction.match.tournament === "Premier League" &&
+          typeof prediction.match.team_one_score === "number" &&
+          typeof prediction.match.team_two_score === "number"
+        );
+      }
     });
     const sortedByDate = euroPredictions.sort(
       (a: any, b: any) =>

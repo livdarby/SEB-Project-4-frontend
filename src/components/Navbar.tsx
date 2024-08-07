@@ -1,12 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import soccer_ball from "../../assets/soccer-ball.png";
+import fplblackboxbanner from "../../assets/fplblackboxbanner.jpeg";
 
 function Navbar({ user, setUser }: any) {
   const [menuDisplayedMobile, setMenuDisplayedMobile] = React.useState(false);
-  const [mouseIsHovered, setMouseIsHovered] = React.useState(false);
+  const [mouseIsHoveredEuros, setMouseIsHoveredEuros] = React.useState(false);
+  const [mouseIsHoveredPremierLeague, setMouseIsHoveredPremierLeague] =
+    React.useState(false);
+  const [activeTab, setActiveTab] = useState("");
   const navigate = useNavigate();
-  // console.log(mouseIsHovered);
 
   function logout() {
     localStorage.removeItem("token");
@@ -23,10 +26,11 @@ function Navbar({ user, setUser }: any) {
     setMenuDisplayedMobile((prevState) => !prevState);
   }
 
-  function handleLinkClick() {
+  function handleLinkClick(tabName: any) {
     if (menuDisplayedMobile && window.innerWidth < 1024) {
       setMenuDisplayedMobile(false);
     }
+    setActiveTab(tabName);
   }
 
   useEffect(() => {
@@ -47,25 +51,40 @@ function Navbar({ user, setUser }: any) {
   //   }
   // }
 
-  function handleHover() {
-    mouseIsHovered ? setMouseIsHovered(false) : setMouseIsHovered(true);
-  }
-
   return (
     <>
-      <nav className="bg-[#69c0f0] flex items-center justify-between flex-wrap p-6">
-        <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <img
-            src={soccer_ball}
-            className="fill-current"
-            height="60"
-            width="60"
-            alt="Soccer Ball"
-          />
-          <span className="font-marker font-semibold text-2xl tracking-widest">
-            <Link to="/">Premier Picks</Link>
-          </span>
-        </div>
+      <nav
+        className={`${
+          activeTab === "fplblackbox" ? "bg-black " : "bg-[#69c0f0] "
+        } flex items-center justify-between flex-wrap p-6`}
+      >
+        {activeTab !== "fplblackbox" && (
+          <div className="flex items-center flex-shrink-0 text-white mr-6">
+            <img
+              src={soccer_ball}
+              className="fill-current"
+              height="60"
+              width="60"
+              alt="Soccer Ball"
+            />
+            <span className="font-marker font-semibold text-2xl tracking-widest">
+              <Link to="/">Premier Picks</Link>
+            </span>
+          </div>
+        )}
+
+        {activeTab === "fplblackbox" && (
+          <div>
+            <img
+              src={fplblackboxbanner}
+              alt="FPL Black Box Banner"
+              height="60"
+              width="200"
+              className="fill-current mr-5"
+            />
+          </div>
+        )}
+
         <div className="block lg:hidden">
           <button
             onClick={toggleHamburgerMenu}
@@ -88,13 +107,15 @@ function Navbar({ user, setUser }: any) {
         >
           <div className="text-sm lg:flex-grow">
             <Link
-              onClick={handleLinkClick}
+              onClick={() => {
+                handleLinkClick("");
+              }}
               to="/"
               className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
             >
               Home
             </Link>
-            {user && user.id !== 1 && (
+            {/* {user && user.id !== 1 && (
               <Link
                 onClick={handleLinkClick}
                 to="/predictions"
@@ -102,13 +123,55 @@ function Navbar({ user, setUser }: any) {
               >
                 Premier League
               </Link>
-            )}
+            )} */}
 
             {user && user.id !== 1 && (
               <div
                 className="relative inline-block text-left"
-                onMouseEnter={() => setMouseIsHovered(true)}
-                onMouseLeave={() => setMouseIsHovered(false)}
+                onMouseEnter={() => setMouseIsHoveredPremierLeague(true)}
+                onMouseLeave={() => setMouseIsHoveredPremierLeague(false)}
+              >
+                <Link
+                  to="/premierleague"
+                  className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
+                >
+                  Premier League
+                </Link>
+                {mouseIsHoveredPremierLeague && (
+                  <div
+                    className="absolute left-0 py-2 w-48 bg-white rounded shadow-lg"
+                    onMouseEnter={() => setMouseIsHoveredPremierLeague(true)}
+                    onMouseLeave={() => setMouseIsHoveredPremierLeague(false)}
+                  >
+                    <Link
+                      onClick={() => {
+                        handleLinkClick("");
+                      }}
+                      to="/premierleague"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >
+                      Enter Predictions
+                    </Link>
+                    <Link
+                      onClick={() => {
+                        handleLinkClick("");
+                      }}
+                      to="/plresults"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >
+                      View Results
+                    </Link>
+
+                    {/* Add more submenu items here if needed */}
+                  </div>
+                )}
+              </div>
+            )}
+            {user && user.id !== 1 && (
+              <div
+                className="relative inline-block text-left"
+                onMouseEnter={() => setMouseIsHoveredEuros(true)}
+                onMouseLeave={() => setMouseIsHoveredEuros(false)}
               >
                 <Link
                   to="/euros"
@@ -116,21 +179,25 @@ function Navbar({ user, setUser }: any) {
                 >
                   Euros
                 </Link>
-                {mouseIsHovered && (
+                {mouseIsHoveredEuros && (
                   <div
                     className="absolute left-0 py-2 w-48 bg-white rounded shadow-lg"
-                    onMouseEnter={() => setMouseIsHovered(true)}
-                    onMouseLeave={() => setMouseIsHovered(false)}
+                    onMouseEnter={() => setMouseIsHoveredEuros(true)}
+                    onMouseLeave={() => setMouseIsHoveredEuros(false)}
                   >
                     <Link
-                      onClick={handleLinkClick}
+                      onClick={() => {
+                        handleLinkClick("");
+                      }}
                       to="/euros"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                     >
                       Enter Predictions
                     </Link>
                     <Link
-                      onClick={handleLinkClick}
+                      onClick={() => {
+                        handleLinkClick("");
+                      }}
                       to="/eurosresults"
                       className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                     >
@@ -145,7 +212,9 @@ function Navbar({ user, setUser }: any) {
 
             {user && user.id !== 1 && (
               <Link
-                onClick={handleLinkClick}
+                onClick={() => {
+                  handleLinkClick("");
+                }}
                 to="/leaderboard"
                 className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
               >
@@ -154,7 +223,9 @@ function Navbar({ user, setUser }: any) {
             )}
             {user && user.id === 1 && (
               <Link
-                onClick={handleLinkClick}
+                onClick={() => {
+                  handleLinkClick("");
+                }}
                 to="/matches"
                 className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
               >
@@ -181,18 +252,22 @@ function Navbar({ user, setUser }: any) {
             )}
             {user && user.permissions === "admin" && (
               <Link
-                onClick={handleLinkClick}
+                onClick={() => {
+                  handleLinkClick("fplblackbox");
+                }}
                 to="/fplblackbox"
                 className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
               >
-                FPL Blackbox
+                Az v. Mark
               </Link>
             )}
           </div>
           <div>
             {!user && (
               <Link
-                onClick={handleLinkClick}
+                onClick={() => {
+                  handleLinkClick("");
+                }}
                 to="/signin"
                 className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-orange-600 hover:bg-white mt-4 lg:mt-0"
               >
@@ -204,7 +279,7 @@ function Navbar({ user, setUser }: any) {
                 to="/signin"
                 onClick={() => {
                   logout();
-                  handleLinkClick();
+                  handleLinkClick("");
                 }}
                 className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-amber-500 hover:bg-white mt-4 lg:mt-0 hover:border-amber-500"
               >

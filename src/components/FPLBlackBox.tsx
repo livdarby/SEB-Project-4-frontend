@@ -41,18 +41,18 @@ function FPLBlackBox({ user }: any) {
 
   return (
     <>
-      <div>
-        <h1 className="font-title text-center text-3xl tracking-wider my-3">
+      <div className="bg-black min-h-screen">
+        <h1 className="font-title text-center text-3xl tracking-wider py-3 text-white font-fpl">
           FPL BLACKBOX
         </h1>
         <form>
-          <div className="border rounded border-2 max-w-[80%] mx-auto px-5 flex justify-evenly items-center">
-            <label className="uppercase text-xs font-semibold tracking-wide">
+          <div className="border rounded border-1 max-w-[80%] mx-auto px-5 flex justify-center items-center text-white bg-[#e2397c] py-3">
+            <label className="uppercase text-xs font-semibold tracking-wide mx-5">
               Match Week
             </label>
             <select
               className={
-                "uppercase text-xs font-semibold tracking-wide " +
+                "uppercase cursor-pointer text-xs font-semibold mx-5 tracking-wide bg-[#9f2a59] " +
                 (selectedMatchWeek === "" && "text-gray-500")
               }
               onChange={handleMatchWeekChange}
@@ -71,18 +71,18 @@ function FPLBlackBox({ user }: any) {
                 })}
             </select>
             <button
-              className="uppercase text-xs font-semibold tracking-wide text-red-500"
+              className="uppercase text-xs font-semibold tracking-wide text-red-500 text-white mx-5"
               onClick={handleSubmit}
             >
               Submit
             </button>
           </div>
         </form>
-        <div className="border border-2 max-w-[80%] mx-auto flex flex-col items-center">
+        <div className="border border-1 max-w-[80%] mx-auto flex flex-col items-center text-white">
           {gamesByMatchWeek && (
-            <div className="font-title flex w-[100%] justify-between">
-              <div className="ml-[10%]">AZ</div>
-              <div className="mr-[10%]">MARK</div>
+            <div className="font-fpl text-sm tracking-widest flex w-[100%] justify-between bg-[#ad486f]">
+              <div className="w-[25%] text-center">AZ</div>
+              <div className="w-[25%] text-center">MARK</div>
             </div>
           )}
           {gamesByMatchWeek &&
@@ -91,7 +91,7 @@ function FPLBlackBox({ user }: any) {
                 <>
                   <div
                     key={game.id}
-                    className="flex uppercase text-sm font-bold tracking-wider w-[100%]"
+                    className="flex uppercase text-sm font-bold tracking-wider w-[100%] text-white mt-3"
                   >
                     {" "}
                     <div className="min-w-[25%] text-center">
@@ -102,7 +102,7 @@ function FPLBlackBox({ user }: any) {
                       <p className="mx-5  text-center w-[20%]">
                         {game.team_one_name}
                       </p>
-                      <p className=" text-center w-[20%]">VS</p>
+                      <p className=" text-center w-[10%]">V</p>
                       <p className="mx-5  text-center w-[20%]">
                         {game.team_two_name}
                       </p>

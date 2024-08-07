@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         title: "DM Serif Display",
         marker: "Permanent Marker",
+        fpl: "Archivo Black",
       },
     },
   },
