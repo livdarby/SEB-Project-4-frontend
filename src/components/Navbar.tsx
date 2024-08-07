@@ -4,7 +4,9 @@ import soccer_ball from "../../assets/soccer-ball.png";
 
 function Navbar({ user, setUser }: any) {
   const [menuDisplayedMobile, setMenuDisplayedMobile] = React.useState(false);
+  const [mouseIsHovered, setMouseIsHovered] = React.useState(false);
   const navigate = useNavigate();
+  // console.log(mouseIsHovered);
 
   function logout() {
     localStorage.removeItem("token");
@@ -45,6 +47,10 @@ function Navbar({ user, setUser }: any) {
   //   }
   // }
 
+  function handleHover() {
+    mouseIsHovered ? setMouseIsHovered(false) : setMouseIsHovered(true);
+  }
+
   return (
     <>
       <nav className="bg-[#69c0f0] flex items-center justify-between flex-wrap p-6">
@@ -84,7 +90,7 @@ function Navbar({ user, setUser }: any) {
             <Link
               onClick={handleLinkClick}
               to="/"
-              className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+              className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
             >
               Home
             </Link>
@@ -92,34 +98,56 @@ function Navbar({ user, setUser }: any) {
               <Link
                 onClick={handleLinkClick}
                 to="/predictions"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
               >
                 Premier League
               </Link>
             )}
+
             {user && user.id !== 1 && (
-              <Link
-                onClick={handleLinkClick}
-                to="/euros"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+              <div
+                className="relative inline-block text-left"
+                onMouseEnter={() => setMouseIsHovered(true)}
+                onMouseLeave={() => setMouseIsHovered(false)}
               >
-                Euros
-              </Link>
+                <Link
+                  to="/euros"
+                  className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
+                >
+                  Euros
+                </Link>
+                {mouseIsHovered && (
+                  <div
+                    className="absolute left-0 py-2 w-48 bg-white rounded shadow-lg"
+                    onMouseEnter={() => setMouseIsHovered(true)}
+                    onMouseLeave={() => setMouseIsHovered(false)}
+                  >
+                    <Link
+                      onClick={handleLinkClick}
+                      to="/euros"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >
+                      Enter Predictions
+                    </Link>
+                    <Link
+                      onClick={handleLinkClick}
+                      to="/eurosresults"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >
+                      View Results
+                    </Link>
+
+                    {/* Add more submenu items here if needed */}
+                  </div>
+                )}
+              </div>
             )}
-            {user && user.id !== 1 && (
-              <Link
-                onClick={handleLinkClick}
-                to="/eurosresults"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-              >
-                Euros Results
-              </Link>
-            )}
+
             {user && user.id !== 1 && (
               <Link
                 onClick={handleLinkClick}
                 to="/leaderboard"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
               >
                 Leaderboard
               </Link>
@@ -128,7 +156,7 @@ function Navbar({ user, setUser }: any) {
               <Link
                 onClick={handleLinkClick}
                 to="/matches"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
               >
                 Post A Match
               </Link>
@@ -137,7 +165,7 @@ function Navbar({ user, setUser }: any) {
               <Link
                 onClick={handleLinkClick}
                 to="/editprediction"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
               >
                 Edit A Prediction
               </Link>
@@ -146,7 +174,7 @@ function Navbar({ user, setUser }: any) {
               <Link
                 onClick={handleLinkClick}
                 to="/scoreupdate"
-                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 uppercase"
               >
                 Update A Score
               </Link>
