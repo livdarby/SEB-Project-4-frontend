@@ -42,7 +42,7 @@ function FPLBlackBox({ user }: any) {
   return (
     <>
       <div className="bg-black min-h-screen">
-        <h1 className="font-title text-center text-3xl tracking-wider py-3 text-white font-fpl">
+        <h1 className="text-center text-3xl tracking-wider py-3 text-white font-fpl">
           FPL BLACKBOX
         </h1>
         <form>
